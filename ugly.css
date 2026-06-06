@@ -15,7 +15,7 @@
 body {
     background-color: var(--white);
     /* Tiled low-res album cover background attempt */
-    background-image: url('synghus_plaadikaas_ilma_logota-01.png');
+    background-image: url('cover.jpg');
     background-size: 150px;
     background-repeat: repeat;
     font-family: 'Times New Roman', Times, serif;
