@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rituaal — SYNGHUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--olive:#5a6a4a;--olive-dim:#3a4530;--teal:#2a3a40;--teal-deep:#1a2028;--ochre:#c4a060;--ochre-dim:#8a7040;--ochre-bright:#d4b878;--blood:#8a3535;--blood-dim:#5a2828;--bone:#d8d0c0;--bone-dim:#a09880;--bg:#1a2028;--line:#2e3a3a;--line-light:#3a4848;--text:#a0a098;--text-dim:#606860;--text-bright:#d0ccc0;--serif:'Cormorant Garamond',Georgia,serif;--mono:'IBM Plex Mono',monospace;--sans:'Space Grotesk',sans-serif}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.7;min-height:100vh;overflow-x:hidden}
+  ::selection{background:var(--olive-dim);color:var(--ochre-bright)}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .fog{position:fixed;top:0;left:0;width:200%;height:200%;pointer-events:none;z-index:0;opacity:.5}
+  #f1{background:radial-gradient(ellipse at 30% 40%,rgba(90,106,74,.05) 0%,transparent 50%);animation:fd 50s ease-in-out infinite}
+  #f2{background:radial-gradient(ellipse at 70% 60%,rgba(138,53,53,.035) 0%,transparent 45%);animation:fd 38s ease-in-out infinite reverse}
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(var(--bg),transparent);}
+  .nav a{color:var(--text-dim);text-decoration:none;font-size:10px;letter-spacing:.12em;text-transform:uppercase;transition:color .3s}
+  .nav a:hover{color:var(--ochre)}
+  .nav .ti{color:var(--olive-dim);font-size:10px;letter-spacing:.1em}
+  .page{max-width:720px;margin:0 auto;padding:110px 40px 80px;position:relative;z-index:1}
+  .sh{margin-bottom:56px;opacity:0;animation:fu 1.5s ease-out .3s forwards}
+  .sn{font-size:10px;color:var(--olive);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+  .st{font-family:var(--sans);font-size:44px;font-weight:300;color:var(--ochre-bright);letter-spacing:.02em;line-height:1.1;margin-bottom:10px}
+  .sd{font-size:11px;color:var(--text-dim);font-style:italic}
+  .lyrics{margin-bottom:56px;opacity:0;animation:fu 1.5s ease-out .7s forwards}
+  .ll{font-size:10px;color:var(--olive-dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .ll::after{content:'';flex:1;height:.5px;background:var(--line)}
+  .sz{margin-bottom:24px}
+  .sz p{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--text);line-height:1.65;letter-spacing:.015em}
+  .sz .ac{color:var(--ochre)}
+  .sb{width:1px;height:16px;background:var(--line);margin:0 auto 24px}
+  .rs{margin-bottom:56px;padding:32px 0;border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);opacity:0;animation:fu 1.5s ease-out 1s forwards}
+  .rl{font-size:10px;color:var(--olive-dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px}
+  .rt{font-family:var(--serif);font-size:16px;font-weight:300;font-style:italic;color:var(--bone-dim);line-height:1.8}
+  .rt em{color:var(--ochre);font-style:normal}
+  
+  .tn{display:flex;justify-content:space-between;padding:20px 0;border-top:.5px solid var(--line);opacity:0;animation:fu 1.5s ease-out 1.3s forwards}
+  .tn a{color:var(--text-dim);text-decoration:none;font-size:11px;letter-spacing:.08em;transition:color .3s}
+  .tn a:hover{color:var(--ochre)}
+  .tn .dir{font-size:9px;color:var(--olive-dim);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:3px}
+  @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fd{0%{transform:translate(0,0)}50%{transform:translate(-3%,2%)}100%{transform:translate(0,0)}}
+  @media(max-width:640px){.page{padding:96px 24px 60px}.st{font-size:30px}.sz p{font-size:16px}.nav{padding:14px 20px}.rt{font-size:14px}}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="fog" id="f1"></div>
+<div class="fog" id="f2"></div>
+<nav class="nav"><a href="index.html">&larr; Synghus</a><span class="ti">05 / 05</span></nav>
+<div class="page">
+  <div class="sh">
+    <p class="sn">Track 05 &middot; minimalist · trance</p>
+    <h1 class="st">Rituaal</h1>
+  </div>
+  <div class="lyrics"><p class="ll">S&otilde;nad</p><div class="sz"><p>Kutsun tuule siia</p><p>Manan hääle ära</p></div><div class="sb"></div><div class="sz"><p>Taevast tulnud hinguse</p><p>Vaikust saadavad tähed</p></div><div class="sb"></div><div class="sz"><p>Võtan maailmal käest</p><p>Murran oma tahte alla</p></div><div class="sb"></div><div class="sz"><p>Öövalgus pimestab</p><p>Sõrmedel heliseb aeg</p></div><div class="sb"></div><div class="sz"><p>Tuli taeva põletab</p><p class="ac">Kaosest sa sünnid</p></div><div class="sb"></div><div class="sz"><p>Sosistatud sõna</p><p>Horisonti kõverdab</p></div><div class="sb"></div><div class="sz"><p>Pilli keeled võnguvad</p><p class="ac">Kehatu saab lihaks</p></div></div>
+  <div class="rs"><p class="rl">Signal received</p><p class="rt">Rituaal is a masterclass in <em>minimalism and atmosphere</em>. It abandons traditional structure for dense, hypnotic trance. Abstract guitar textures, feedback, scraping. The vocal performance is stark and harrowing. <em>Pure, suffocating atmosphere</em> — designed to place the listener into an uncomfortable, trance-like state.</p></div>
+  
+  <div class="tn"><a href="pouaaike.html"><span class="dir">&larr; Prev</span>Põuaäike</a><a href="ekstaas.html" style="text-align:right"><span class="dir">Next &rarr;</span>Ekstaas</a></div>
+</div>
+<script>
+const C=document.getElementById('particles'),X=C.getContext('2d');let W,H;function sz(){W=C.width=innerWidth;H=C.height=Math.max(document.documentElement.scrollHeight,innerHeight*2)}addEventListener('resize',sz);sz();const P=[];class Pt{constructor(){this.r()}r(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*1.2+.4;this.vx=(Math.random()-.5)*.08;this.vy=(Math.random()-.5)*.05-.02;this.o=Math.random()*.18+.04;this.l=Math.random()*900+400;this.a=0}u(){this.x+=this.vx;this.y+=this.vy;this.a++;if(this.a>this.l||this.x<-10||this.x>W+10||this.y<-10||this.y>H+10)this.r()}d(){const f=Math.min(1,this.a/60)*Math.min(1,(this.l-this.a)/60);X.beginPath();X.arc(this.x,this.y,this.s,0,Math.PI*2);X.fillStyle=`rgba(180,175,155,${this.o*f})`;X.fill()}}for(let i=0;i<22;i++)P.push(new Pt);!function a(){X.clearRect(0,0,W,H);P.forEach(p=>{p.u();p.d()});requestAnimationFrame(a)}();
+</script>
+</body>
+</html>
