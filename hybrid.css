@@ -1,0 +1,225 @@
+:root {
+    --bg-dark: #050505;
+    --text-light: #e0e0e0;
+    --accent-red: #8c2b1f; 
+    --acid-green: #BFFF00;
+    --neon-orange: #FF6B00;
+    --black: #000000;
+    --white: #FFFFFF;
+    --noise-opacity: 0.1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: crosshair;
+}
+
+body {
+    background-color: var(--bg-dark);
+    font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+    color: var(--text-light);
+}
+
+/* Base Texture combined with Loud Filter */
+.bg-texture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('synghus_plaadikaas_ilma_logota-01.png');
+    background-size: cover;
+    background-position: center;
+    /* Loud and Weird: contrast pushed, hue rotated slightly, blended */
+    filter: brightness(0.6) contrast(1.5) hue-rotate(45deg) saturate(1.5);
+    z-index: -2;
+    opacity: 0.8;
+}
+
+/* Static Noise Overlay from V1 */
+body::after {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: var(--noise-opacity);
+    z-index: 9999;
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+}
+
+@keyframes noise {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-1%, -1%); }
+    20% { transform: translate(-2%, 1%); }
+    30% { transform: translate(1%, -2%); }
+    40% { transform: translate(-1%, 3%); }
+    50% { transform: translate(-2%, 1%); }
+    60% { transform: translate(3%, 1%); }
+    70% { transform: translate(2%, 1%); }
+    80% { transform: translate(1%, -1%); }
+    90% { transform: translate(-1%, 2%); }
+    100% { transform: translate(1%, -2%); }
+}
+
+/* Brutalist Marquee but Dark Mode */
+.marquee-container {
+    background: var(--accent-red);
+    border-bottom: 3px solid var(--black);
+    color: var(--white);
+    padding: 10px 0;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    mix-blend-mode: hard-light;
+}
+
+/* Desktop Area */
+.desktop-area {
+    width: 100vw;
+    height: 100vh;
+    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hybrid Windows: Brutalist Borders but Textured/Glassy Insides */
+.window {
+    background: rgba(0, 0, 0, 0.7);
+    border: 3px solid var(--acid-green);
+    box-shadow: 8px 8px 0 rgba(191, 255, 0, 0.5); /* Acid green shadow */
+    position: absolute;
+    min-width: 300px;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.window-header {
+    background: var(--acid-green);
+    color: var(--black);
+    padding: 5px 10px;
+    font-family: 'Arial black', sans-serif;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    cursor: move;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+}
+
+.window-content {
+    padding: 20px;
+}
+
+.logo-window {
+    border-color: var(--neon-orange);
+    box-shadow: 8px 8px 0 rgba(255, 107, 0, 0.5);
+    background: rgba(5, 5, 5, 0.9);
+}
+.logo-window .window-header {
+    background: var(--neon-orange);
+}
+
+.main-logo-hybrid {
+    width: 100%;
+    filter: drop-shadow(0 0 10px var(--neon-orange)) invert(1);
+}
+
+/* The Glitch from V1 added to Logo */
+.glitch-hover:hover .main-logo-hybrid {
+    animation: logo-glitch 0.2s infinite;
+}
+
+@keyframes logo-glitch {
+    0% { transform: translate(0); clip-path: inset(0 0 0 0); }
+    10% { transform: translate(-5px, 2px); clip-path: inset(10% 0 40% 0); }
+    20% { transform: translate(5px, -2px); clip-path: inset(30% 0 10% 0); }
+    30% { transform: translate(-2px, 5px); clip-path: inset(50% 0 5% 0); }
+    40% { transform: translate(2px, -5px); clip-path: inset(0 0 70% 0); }
+    50% { transform: translate(-5px, 2px); clip-path: inset(20% 0 20% 0); }
+    100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+}
+
+/* Hybrid Buttons */
+.hybrid-btn {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--acid-green);
+    border: 1px solid var(--acid-green);
+    padding: 10px 20px;
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+    transition: all 0.2s;
+    text-transform: lowercase;
+}
+
+.hybrid-btn:hover {
+    background: var(--acid-green);
+    color: var(--black);
+    transform: scale(1.05) translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--neon-orange);
+}
+
+/* Typography styles inside windows */
+.lyric-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-light);
+    border-left: 3px solid var(--neon-orange);
+    padding-left: 15px;
+}
+
+/* Glitch Overlay */
+#glitch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease;
+}
+
+.glitch-content h1 {
+    font-size: 6vw;
+    color: var(--white);
+    text-shadow: 4px 4px var(--neon-orange), -4px -4px var(--acid-green);
+    animation: jitter 0.1s infinite;
+    font-family: 'Arial black', sans-serif;
+}
+
+@keyframes jitter {
+    0% { transform: translate(4px, 4px); }
+    25% { transform: translate(-4px, -4px); }
+    50% { transform: translate(-4px, 4px); }
+    75% { transform: translate(4px, -4px); }
+    100% { transform: translate(0); }
+}
+
+@media (max-width: 768px) {
+    .window {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 90% !important;
+        margin: 20px auto;
+    }
+    .desktop-area { overflow-y: auto; overflow-x: hidden; }
+}

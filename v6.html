@@ -1,0 +1,96 @@
+<!--
+  
+   S Y N G H U S
+   _____________
+   
+   █ █ █ █ █ █ █
+   █   █   █   █
+   █ █ █ █ █ █ █
+   █           █
+   █ █ █ █ █ █ █
+   
+   N Ä L J A T O O J A
+   ( H Y B R I D   A R T I F A C T )
+   
+-->
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNGHUS :: THE HYBRID</title>
+    <link rel="stylesheet" href="hybrid.css">
+</head>
+<body>
+    <div class="bg-texture"></div>
+
+    <div class="marquee-container">
+        <marquee scrollamount="12">NÄLJATOOJA ON TEEL /// THE HUNGER GROWS /// NÄLJATOOJA ON TEEL /// THE HUNGER GROWS /// MUTE THE VOID ///</marquee>
+    </div>
+
+    <div class="desktop-area">
+        <!-- RENAISSANCE LOGO WINDOW -->
+        <div class="window logo-window draggable" style="top: 15vh; left: 10vw; width: 600px; max-width: 90vw;">
+            <div class="window-header">
+                <span>synghus_ritual.exe</span>
+                <span>[X]</span>
+            </div>
+            <div class="window-content glitch-hover">
+                <img src="synghus_logo.svg" alt="SYNGHUS Logo" class="main-logo-hybrid" id="logo-svg">
+            </div>
+        </div>
+
+        <!-- REVIEWS & LYRICS -->
+        <div class="window draggable" style="top: 20vh; right: 5vw; width: 350px;">
+            <div class="window-header">
+                <span>archive // metalne_maastik</span>
+                <span>[-]</span>
+            </div>
+            <div class="window-content">
+                <p class="lyric-text">"Metallic Landscape... almost monastic or hymnal... ritual taking place in an industrial ruin."</p>
+                <div style="margin-top: 15px; font-family: monospace; color: var(--acid-green);">
+                    > Mu sees tume tühimik<br>
+                    > Mis sosistab, karjub ja oigab
+                </div>
+            </div>
+        </div>
+
+        <!-- STREAMING LINKS -->
+        <div class="window draggable" style="top: 60vh; left: 20vw; width: 450px;">
+            <div class="window-header">
+                <span>consume // stream_links</span>
+                <span>[+]</span>
+            </div>
+            <div class="window-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y" class="hybrid-btn">spotify</a>
+                <a href="https://tidal.com/artist/60078518/u" class="hybrid-btn">tidal</a>
+                <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291" class="hybrid-btn">apple music</a>
+                <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng" class="hybrid-btn">youtube</a>
+            </div>
+        </div>
+
+        <!-- AUDIO + RITUAL TRIGGER -->
+        <div class="window draggable" style="bottom: 5vh; right: 5vw; border-color: var(--accent-red);">
+            <div class="window-header" style="background: var(--accent-red); color: white;">
+                <span>SOUNDSCAPE & INVOCATION</span>
+            </div>
+            <div class="window-content" style="text-align: center;">
+                <button id="audio-toggle" class="hybrid-btn" style="border-color: white; color: white; display: none;">MUTE THE VOID</button>
+                <button id="ritual-btn" class="hybrid-btn" style="background: var(--accent-red); color: var(--bg-dark); border: none; font-size: 1.5rem;">INVOKE DANGER</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden audio (track removed — not yet released) -->
+    <audio id="bg-audio" loop></audio>
+
+    <!-- Full Screen Glitch Overlay -->
+    <div id="glitch-overlay">
+        <div class="glitch-content">
+            <h1 id="overlay-msg">CAN YOU HEAR IT?</h1>
+        </div>
+    </div>
+
+    <script src="hybrid.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNGHUS :: NÄLJATOOJA :: NEW UGLY</title>
+    <link rel="stylesheet" href="ugly.css">
+</head>
+<body>
+    <div class="marquee-container">
+        <marquee scrollamount="15">NÄLJATOOJA ON TEEL ::: THE HUNGER GROWS ::: NÄLJATOOJA ON TEEL ::: THE HUNGER GROWS ::: CONSUME ::: CONSUME :::</marquee>
+    </div>
+
+    <div class="desktop-area">
+        <!-- LOGO WINDOW -->
+        <div class="window big-logo-box draggable" style="top: 100px; left: 50px;">
+            <div class="window-header">
+                <span>synghus_logo_v2.exe</span>
+                <span>[X]</span>
+            </div>
+            <div class="window-content">
+                <img src="synghus_logo.svg" alt="LOGO" class="main-logo-ugly">
+            </div>
+        </div>
+
+        <!-- STREAMING WINDOW -->
+        <div class="window draggable" style="top: 450px; left: 150px; width: 400px;">
+            <div class="window-header">
+                <span>CONNECT.rar</span>
+                <span>[-]</span>
+            </div>
+            <div class="window-content">
+                <p class="distort-text">choose your poison:</p>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y" class="ugly-btn">SPOTIFY</a>
+                    <a href="https://tidal.com/artist/60078518/u" class="ugly-btn">TIDAL</a>
+                    <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291" class="ugly-btn">APPLE</a>
+                    <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng" class="ugly-btn">YOUTUBE</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- LYRICS WINDOW -->
+        <div class="window draggable" style="top: 150px; right: 100px; width: 350px;">
+            <div class="window-header">
+                <span>LYRICS_ARCHIVE.txt</span>
+                <span>[?]</span>
+            </div>
+            <div class="window-content">
+                <p>Mu sees tume tühimik<br>Mis sosistab, karjub ja oigab</p>
+                <hr style="margin: 10px 0; border: 2px solid black;">
+                <p style="text-align: right; color: var(--neon-blue);">"Metallic Landscape... ritual taking place in an industrial ruin."</p>
+            </div>
+        </div>
+
+        <!-- AUDIO CONTROL (hidden — track not yet released) -->
+        <div class="window draggable" style="bottom: 50px; right: 50px; display: none;">
+            <div class="window-header">
+                <span>SOUNDSCAPE</span>
+            </div>
+            <div class="window-content" style="text-align:center;">
+                <button id="audio-toggle" class="ugly-btn" style="background: var(--acid); color: black;">PLAY/STOP THE NOISE</button>
+            </div>
+        </div>
+
+        <!-- RITUAL BUTTON -->
+        <div class="window draggable" style="bottom: 150px; left: 50px;">
+            <div class="window-header" style="background: red;">
+                <span>DANGER!!!!</span>
+            </div>
+            <div class="window-content">
+                <button id="ritual-btn" class="ugly-btn" style="background: red; font-size: 2rem;">INVOKE</button>
+                <p style="font-size: 0.6rem; margin-top: 5px;">DO NOT PRESS DO NOT PRESS DO NOT PRESS</p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bg-audio" loop></audio>
+
+    <div id="glitch-overlay" class="overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--acid); z-index:9999; display:none; align-items:center; justify-content:center;">
+        <h1 style="font-size: 10vw; color: red; font-family: 'Arial black';">SYNGHUS ERROR</h1>
+    </div>
+
+    <script src="ugly.js"></script>
+</body>
+</html>
