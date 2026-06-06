@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!--
+
+    ███████╗██╗   ██╗███╗   ██╗ ██████╗ ██╗  ██╗██╗   ██╗███████╗
+    ██╔════╝╚██╗ ██╔╝████╗  ██║██╔════╝ ██║  ██║██║   ██║██╔════╝
+    ███████╗ ╚████╔╝ ██╔██╗ ██║██║  ███╗███████║██║   ██║███████╗
+    ╚════██║  ╚██╔╝  ██║╚██╗██║██║   ██║██╔══██║██║   ██║╚════██║
+    ███████║   ██║   ██║ ╚████║╚██████╔╝██║  ██║╚██████╔╝███████║
+    ╚══════╝   ╚═╝   ╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+
+    Sa leidsid selle. Tubli.
+    58.3780°N / 24.5040°E — Pärnumaa sood ja metsad.
+
+    Proovi: ↑ ↑ ↓ ↓ ← → ← → B A
+    Või kirjuta: synghus
+
+    "Kehatu saab lihaks"
+
+-->
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SYNGHUS — Experimental doom and ritual metal from Estonia">
+<meta name="theme-color" content="#1a2028">
+<title>SYNGHUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --olive:#5a6a4a;--olive-dim:#3a4530;--olive-light:#7a8a66;
+    --teal:#2a3a40;--teal-deep:#1a2028;
+    --ochre:#c4a060;--ochre-dim:#8a7040;--ochre-bright:#d4b878;
+    --blood:#8a3535;--blood-dim:#5a2828;
+    --bone:#d8d0c0;--bone-dim:#a09880;
+    --bg:#1a2028;--bg2:#1e2830;
+    --line:#2e3a3a;--line-light:#3a4848;
+    --text:#a0a098;--text-dim:#606860;--text-bright:#d0ccc0;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --mono:'IBM Plex Mono',monospace;
+    --sans:'Space Grotesk',sans-serif;
+  }
+
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.7;min-height:100vh;overflow-x:hidden}
+  ::selection{background:var(--olive-dim);color:var(--ochre-bright)}
+
+  /* Hidden select text */
+  .ht{color:transparent;user-select:all;position:absolute;font-size:12px;letter-spacing:.05em;pointer-events:none;z-index:1;font-family:var(--serif);font-style:italic}
+  .ht::selection{color:var(--ochre);background:rgba(0,0,0,.4)}
+
+  /* Particles */
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+  /* Atmospheric fog layers */
+  .fog{position:fixed;top:0;left:0;width:200%;height:200%;pointer-events:none;z-index:0}
+  #f1{background:radial-gradient(ellipse at 25% 40%,rgba(90,106,74,.06) 0%,transparent 50%);animation:fd 60s ease-in-out infinite}
+  #f2{background:radial-gradient(ellipse at 75% 60%,rgba(138,53,53,.04) 0%,transparent 45%);animation:fd 45s ease-in-out infinite reverse}
+  #f3{background:radial-gradient(ellipse at 50% 20%,rgba(196,160,96,.03) 0%,transparent 40%);animation:fd 70s ease-in-out infinite}
+
+  /* Glitch elements */
+  .gl .logo-svg{animation:lGl .15s steps(2) 1}
+  #gLine{position:fixed;left:0;width:100%;height:2px;background:var(--ochre-dim);opacity:0;z-index:2000;pointer-events:none}
+  #gLine.flash{animation:gF .12s ease-out 1}
+  .gBlock{position:fixed;pointer-events:none;z-index:2000;opacity:0}
+  .gBlock.flash{animation:gBF .1s steps(1) 1}
+
+  /* ===== HERO ===== */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 40px;position:relative;z-index:1}
+  .hero-corner{position:absolute;top:32px;padding:0 40px;width:100%;max-width:960px;left:50%;transform:translateX(-50%);display:flex;justify-content:space-between;opacity:0;animation:fi 1.5s ease-out .2s forwards}
+  .sys-label{font-size:10px;letter-spacing:.12em;color:var(--olive-dim);text-transform:uppercase}
+  .coords{font-size:11px;color:var(--text-dim)}
+  .coords .v{color:var(--text)}
+
+  .logo-wrap{max-width:480px;width:75%;margin-bottom:32px;opacity:0;animation:fu 2s ease-out .5s forwards;cursor:default;position:relative}
+  .logo-svg{width:100%;height:auto;display:block;fill:var(--bone);transition:fill .5s}
+  .logo-secret{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--ochre-dim);letter-spacing:.1em;opacity:0;transition:opacity .6s;white-space:nowrap;font-family:var(--serif);font-style:italic;font-size:13px}
+  .logo-secret.show{opacity:1}
+
+  .genre-line{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--text-dim);text-align:center;opacity:0;animation:fu 1.5s ease-out 1s forwards;margin-bottom:8px}
+  .location{font-size:10px;letter-spacing:.2em;color:var(--olive-dim);text-align:center;opacity:0;animation:fu 1.5s ease-out 1.2s forwards}
+
+  .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);opacity:0;animation:fi 1.5s ease-out 2.5s forwards}
+  .scroll-hint span{display:block;width:1px;height:36px;background:linear-gradient(to bottom,var(--olive-dim),transparent);animation:sp 2.5s ease-in-out infinite}
+
+  /* ===== MAIN CONTENT ===== */
+  .main{max-width:960px;margin:0 auto;padding:0 40px;position:relative;z-index:1}
+
+  /* Two-column album section */
+  .album-reveal{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:60px 0 80px;align-items:start;opacity:0;transform:translateY(20px);transition:opacity 1s,transform 1s}
+  .album-reveal.vis{opacity:1;transform:translateY(0)}
+
+  .cover-wrap{position:relative;overflow:hidden}
+  .cover-wrap img{width:100%;display:block;filter:saturate(.9) brightness(.95);transition:filter .5s}
+  .cover-wrap:hover img{filter:saturate(1) brightness(1)}
+  .cover-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(26,32,40,.9));pointer-events:none}
+  .cover-overlay span{font-size:9px;color:var(--ochre-dim);letter-spacing:.15em;text-transform:uppercase}
+
+  .album-info{display:flex;flex-direction:column;justify-content:center}
+  .album-label{font-size:10px;letter-spacing:.2em;color:var(--olive);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .album-label .dot{width:5px;height:5px;background:var(--olive);border-radius:50%;animation:pulse 3s ease-in-out infinite}
+  .album-title{font-family:var(--sans);font-size:44px;font-weight:300;color:var(--ochre-bright);letter-spacing:.02em;line-height:1.1;margin-bottom:14px}
+  .album-desc{color:var(--text);margin-bottom:6px;font-size:13px}
+  .album-status{display:flex;align-items:center;gap:10px;margin:20px 0}
+  .album-bar{width:180px;height:3px;background:var(--line);overflow:hidden}
+  .album-bar-fill{height:100%;width:0%;background:var(--olive-dim);transition:width 2.5s ease-out}
+  .album-bar-fill.anim{width:70%}
+  .album-bar-label{font-size:10px;color:var(--text-dim);letter-spacing:.06em}
+
+  /* Single / streaming */
+  .signal{padding:48px 0 60px;border-top:.5px solid var(--line);opacity:0;transform:translateY(16px);transition:opacity .9s,transform .9s}
+  .signal.vis{opacity:1;transform:translateY(0)}
+  .signal-header{font-size:10px;letter-spacing:.2em;color:var(--olive);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .signal-header .dot{width:5px;height:5px;background:var(--blood);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+  .signal-title{font-size:15px;color:var(--text-bright);margin-bottom:6px}
+  .signal-sub{color:var(--text-dim);margin-bottom:20px}
+  .signal-sub .blink{animation:blink 1.2s step-end infinite;color:var(--ochre-dim)}
+
+  .stream-links{display:flex;flex-wrap:wrap;gap:10px}
+  .stream-links a{color:var(--ochre-dim);text-decoration:none;font-size:11px;letter-spacing:.06em;padding:8px 16px;border:1px solid var(--line-light);transition:all .3s}
+  .stream-links a:hover{background:var(--olive-dim);color:var(--bone);border-color:var(--olive)}
+
+  /* Fog lyrics reveal */
+  .fog-reveal{margin:40px 0;padding:20px 24px;cursor:crosshair;position:relative;border-left:2px solid transparent;transition:border-color .8s}
+  .fog-reveal:hover{border-left-color:var(--olive-dim)}
+  .fog-reveal p{color:transparent;transition:color 1s;font-family:var(--serif);font-size:17px;font-weight:400;font-style:italic;line-height:1.7;letter-spacing:.02em}
+  .fog-reveal:hover p{color:var(--bone-dim)}
+  .fog-reveal::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 15%,var(--bg) 50%,transparent 85%);pointer-events:none;transition:opacity 1.5s}
+  .fog-reveal:hover::before{opacity:0}
+  .fog-hint{font-size:9px;color:#2a3430;letter-spacing:.15em;font-family:var(--mono);margin-bottom:8px;transition:color 1s}
+  .fog-reveal:hover .fog-hint{color:var(--text-dim)}
+
+  /* Tracklist */
+  .tracklist{padding:48px 0;border-top:.5px solid var(--line);opacity:0;transform:translateY(16px);transition:opacity .9s,transform .9s}
+  .tracklist.vis{opacity:1;transform:translateY(0)}
+  .tl-header{font-size:10px;letter-spacing:.2em;color:var(--olive-dim);text-transform:uppercase;margin-bottom:20px}
+  .track{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:.5px solid var(--line);transition:all .3s;cursor:pointer;text-decoration:none}
+  .track:hover{border-bottom-color:var(--olive);padding-left:4px}
+  .track-num{font-size:10px;color:var(--text-dim);min-width:22px}
+  .track-name{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--text);letter-spacing:.02em;transition:color .3s;text-decoration:none}
+  .track:hover .track-name{color:var(--ochre)}
+  .track-tag{font-size:9px;color:var(--blood-dim);letter-spacing:.12em;text-transform:uppercase;margin-left:auto;border:1px solid var(--blood-dim);padding:2px 8px}
+  .track-desc{font-size:11px;color:var(--text-dim);margin-left:auto;font-style:italic;display:none}
+  .track:hover .track-desc{display:inline}
+
+  /* Quote rotator */
+  .quote-zone{padding:48px 0;text-align:center;opacity:0;transform:translateY(16px);transition:opacity .9s,transform .9s}
+  .quote-zone.vis{opacity:1;transform:translateY(0)}
+  .quote-text{font-family:var(--serif);font-size:18px;font-weight:300;font-style:italic;color:var(--bone-dim);line-height:1.8;max-width:600px;margin:0 auto 12px;transition:opacity .6s}
+  .quote-attr{font-size:10px;color:var(--text-dim);letter-spacing:.15em}
+  .quote-nav{margin-top:16px;display:flex;justify-content:center;gap:8px}
+  .quote-dot{width:6px;height:6px;border-radius:50%;background:var(--line-light);cursor:pointer;transition:background .3s}
+  .quote-dot.active{background:var(--ochre-dim)}
+
+  /* Footer */
+  .footer{padding:28px 0 48px;border-top:.5px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--text-dim);letter-spacing:.08em}
+  .footer a{color:var(--olive);text-decoration:none;transition:color .3s}
+  .footer a:hover{color:var(--ochre)}
+
+  /* The Void */
+  .void{min-height:180vh;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding-top:180px}
+  .vt{opacity:0;transform:translateY(30px);transition:opacity 1.5s,transform 1.5s;text-align:center;margin-bottom:100px}
+  .vt.vis{opacity:1;transform:translateY(0)}
+  .vt p{font-family:var(--serif);font-size:16px;font-weight:400;font-style:italic;color:var(--text-dim);line-height:1.8}
+  .vt .f{color:#2a3430}
+
+  /* Overlays */
+  .overlay{position:fixed;inset:0;background:rgba(10,14,18,.97);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .8s}
+  .overlay.active{display:flex;opacity:1}
+  .overlay p{font-family:var(--serif);font-size:20px;font-weight:300;font-style:italic;color:var(--ochre);text-align:center;line-height:2;max-width:550px;letter-spacing:.02em;padding:0 40px}
+  .overlay .sub{font-size:13px;color:var(--text-dim);font-family:var(--mono);font-style:normal;margin-top:24px}
+  .overlay button{margin-top:32px;color:var(--text-dim);font-size:10px;letter-spacing:.2em;cursor:pointer;border:1px solid var(--line);background:none;font-family:var(--mono);padding:8px 20px;transition:all .3s}
+  .overlay button:hover{color:var(--bone);border-color:var(--olive)}
+  .overlay .review-text{font-family:var(--serif);font-size:16px;font-weight:300;font-style:italic;color:var(--bone-dim);line-height:1.9;max-width:600px}
+  .overlay .review-text em{color:var(--ochre);font-style:normal}
+
+  /* Animations */
+  @keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fi{from{opacity:0}to{opacity:1}}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  @keyframes sp{0%,100%{opacity:.3}50%{opacity:.7}}
+  @keyframes lGl{0%{transform:translate(0) skewX(0)}25%{transform:translate(-3px,1px) skewX(-.4deg);filter:hue-rotate(60deg)}50%{transform:translate(2px,-1px) skewX(.3deg)}100%{transform:translate(0) skewX(0);filter:none}}
+  @keyframes gF{0%{opacity:.5}100%{opacity:0}}
+  @keyframes gBF{0%{opacity:.25}50%{opacity:.12}100%{opacity:0}}
+  @keyframes fd{0%{transform:translate(0,0)}50%{transform:translate(-4%,2%)}100%{transform:translate(0,0)}}
+  @keyframes tGl{0%{transform:translate(0)}30%{transform:translate(-2px,1px)}60%{transform:translate(1px,-1px)}100%{transform:translate(0)}}
+
+  @media(max-width:768px){
+    .album-reveal{grid-template-columns:1fr;gap:32px}
+    .hero{padding:60px 24px}.hero-corner{padding:0 24px}
+    .main{padding:0 24px}.logo-wrap{width:88%}
+    .genre-line{letter-spacing:.2em;font-size:10px}
+    .album-title{font-size:30px}
+    .stream-links a{padding:7px 12px;font-size:10px}
+    .track-name{font-size:16px}
+    .footer{flex-direction:column;gap:10px;align-items:flex-start}
+    .ht{display:none}
+    .track-desc{display:none !important}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="fog" id="f1"></div>
+<div class="fog" id="f2"></div>
+<div class="fog" id="f3"></div>
+<div id="gLine"></div>
+<div class="gBlock" id="gb1" style="width:100px;height:6px;background:var(--olive-dim)"></div>
+<div class="gBlock" id="gb2" style="width:60px;height:3px;background:var(--ochre-dim)"></div>
+
+<!-- ctrl+A hidden lyrics -->
+<span class="ht" style="top:20%;left:5%">kiitsakad kogud vaevlisel teel</span>
+<span class="ht" style="top:38%;right:4%">mu keha ja mõistus on ühinend</span>
+<span class="ht" style="top:58%;left:8%">kutsun tuule siia · manan hääle ära</span>
+<span class="ht" style="top:48%;left:42%">surmakultuslaanes</span>
+<span class="ht" style="top:75%;right:6%">tuli taeva põletab · kaosest sa sünnid</span>
+<span class="ht" style="top:32%;left:22%">kõhud kuivand kokku · huuled lõhki läind</span>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-corner">
+    <p class="sys-label">Sys.ident // active</p>
+    <div class="coords"><span class="v">58.38°N</span> / <span class="v">24.50°E</span></div>
+  </div>
+
+  <div class="logo-wrap" id="logoWrap">
+    <svg class="logo-svg" viewBox="0 0 1933 730" xmlns="http://www.w3.org/2000/svg" style="fill-rule:evenodd;clip-rule:evenodd;">
+      <g transform="matrix(1,0,0,1,-189.985417,-816.557917)"><g transform="matrix(4.166667,0,0,4.166667,0,0)">
+        <g transform="matrix(1,0,0,1,101.0595,210.8208)"><path d="M0,145.287L0,43.906C0,37.817 -3.869,32.849 -8.771,32.849L-27.713,32.849C-28.435,32.849 -29.021,32.263 -29.021,31.541L-29.021,6.899C-29.021,6.186 -28.444,5.609 -27.731,5.609C-27.019,5.609 -26.442,6.186 -26.442,6.899L-26.442,28.353C-26.442,29.066 -25.864,29.645 -25.15,29.645L-7.053,29.645C-5.689,29.788 -4.72,30.055 -3.218,30.831C-1.845,31.541 -0.819,32.685 -0.007,33.934L-0.007,29.645L0,29.645L0,0C0,-2.884 -0.902,-5.608 -2.58,-7.691C-4.256,-9.774 -6.449,-10.896 -8.771,-10.896L-46.692,-10.896C-49.014,-10.896 -51.207,-9.774 -52.883,-7.691C-54.56,-5.608 -55.463,-2.884 -55.463,0L-55.463,38.297C-55.463,41.342 -54.56,44.066 -52.883,46.149C-51.207,48.072 -49.014,49.354 -46.692,49.354L-27.753,49.354C-27.029,49.354 -26.442,49.941 -26.442,50.665L-26.442,138.55C-26.442,139.262 -27.019,139.84 -27.731,139.84C-28.444,139.84 -29.021,139.262 -29.021,138.55L-29.021,53.856C-29.021,53.14 -29.602,52.559 -30.319,52.559L-47.403,52.559C-49.372,52.429 -50.403,52.241 -52.252,51.286C-53.624,50.576 -54.65,49.432 -55.463,48.183L-55.463,145.287C-55.463,148.171 -54.56,151.055 -52.883,152.979C-51.207,155.061 -49.014,156.183 -46.692,156.183L-8.771,156.183C-3.869,156.183 0,151.377 0,145.287" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,302.6172,203.4491)"><path d="M0,160.351C1.547,158.427 2.579,155.543 2.579,152.659L2.579,56.27L-25.539,56.27L-25.539,72.046L-25.156,72.046C-24.441,72.046 -23.862,72.625 -23.862,73.34L-23.862,145.857C-23.862,146.605 -24.468,147.211 -25.216,147.211C-25.964,147.211 -26.571,146.605 -26.571,145.857L-26.571,14.655C-26.571,13.907 -25.964,13.301 -25.216,13.301C-24.468,13.301 -23.862,13.907 -23.862,14.655L-23.862,52.336L2.579,52.336L2.579,7.692C2.579,4.808 1.836,2.071 0.289,-0.012C-1.388,-2.095 -3.999,-3.204 -6.32,-3.204L-44.112,-3.204C-46.434,-3.204 -48.756,-2.082 -50.433,0C-51.98,2.083 -52.883,4.808 -52.883,7.692L-52.883,152.659C-52.883,155.543 -51.98,158.427 -50.433,160.351C-48.756,162.433 -46.434,163.555 -44.112,163.555L-6.32,163.555C-3.999,163.555 -1.677,162.433 0,160.351" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,438.7083,203.4491)"><path d="M0,160.351C1.677,158.427 2.58,155.543 2.58,152.659L2.58,7.777C2.58,-0.325 -2.571,-3.204 -7.543,-3.165L-22.378,-3.204C-23.126,-3.204 -23.732,-2.598 -23.732,-1.85L-23.732,145.857C-23.732,146.605 -24.339,147.211 -25.087,147.211C-25.835,147.211 -26.441,146.605 -26.441,145.857L-26.441,-1.85C-26.441,-2.598 -27.047,-3.204 -27.795,-3.204L-42.76,-3.165C-48.238,-3.204 -52.883,0.134 -52.883,7.777L-52.883,151.342C-52.883,154.226 -51.98,158.427 -50.303,160.351C-48.627,162.433 -46.434,163.555 -43.984,163.555L-6.191,163.555C-3.869,163.555 -1.676,162.433 0,160.351" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,169.1042,199.1809)"><path d="M0,10.028C0,2.718 5.926,-3.207 13.235,-3.207L-26.374,-3.207L-26.374,13.235L0,13.235L0,10.028Z" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,237.1519,213.1304)"><path d="M0,144.422L0,-2.309C0,-5.194 -0.903,-7.918 -2.58,-10.001C-4.128,-12.084 -6.45,-13.205 -8.771,-13.205L-46.564,-13.205C-49.014,-13.205 -51.207,-12.084 -52.884,-10.001C-54.432,-7.918 -55.463,-5.194 -55.463,-2.309L-55.463,144.456L-55.444,144.456C-55.448,144.559 -55.465,144.66 -55.465,144.764C-55.465,150.189 -49.539,154.587 -42.23,154.587C-34.92,154.587 -28.994,150.189 -28.994,144.764C-28.994,144.628 -29.014,144.496 -29.022,144.361L-29.022,4.654C-29.022,3.906 -28.415,3.299 -27.667,3.299C-26.919,3.299 -26.313,3.906 -26.313,4.654L-26.313,157.627L13.234,157.627C5.934,157.627 0.016,151.718 0,144.422" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,169.1042,228.8439)"><path d="M0,128.876L0,121.293C-0.812,122.542 -1.839,123.686 -3.211,124.396C-5.059,125.352 -6.09,125.539 -8.059,125.669L-13.155,125.669L-13.155,115.8L-8.77,115.8C-6.448,115.8 -4.255,114.679 -2.579,112.596C-0.901,110.513 0.001,107.788 0.001,104.904L0.001,-13.235L-26.441,-13.235L-26.441,105.377C-26.441,106.089 -27.018,106.667 -27.731,106.667C-28.443,106.667 -29.02,106.089 -29.02,105.377L-29.02,-13.235L-55.462,-13.235L-55.462,104.904C-55.462,107.788 -54.559,110.513 -52.882,112.596C-51.206,114.679 -49.013,115.8 -46.691,115.8L-39.597,115.8L-39.597,125.669L-47.402,125.669C-49.371,125.539 -50.402,125.352 -52.251,124.396C-53.623,123.686 -54.65,122.542 -55.462,121.293L-55.462,125.669L-55.463,125.669L-55.463,128.876C-55.463,136.186 -61.389,142.111 -68.699,142.111L13.235,142.111C5.926,142.111 0,136.186 0,128.876" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,113.6407,199.1809)"><path d="M0,10.028L0,13.235L26.374,13.235L26.374,-3.207L-13.235,-3.207C-5.926,-3.207 0,2.718 0,10.028" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,506.7545,367.7506)"><path d="M0,-164.621C-1.677,-166.704 -3.87,-167.826 -6.192,-167.826L-44.112,-167.826C-46.434,-167.826 -48.627,-166.704 -50.304,-164.621C-51.98,-162.538 -52.883,-159.814 -52.883,-156.93L-52.883,-118.633C-52.883,-115.588 -51.98,-112.863 -50.304,-110.78C-48.627,-108.857 -46.434,-107.576 -44.112,-107.576L-25.174,-107.576C-24.449,-107.576 -23.862,-106.989 -23.862,-106.264L-23.862,-14.429C-23.862,-13.716 -24.44,-13.139 -25.152,-13.139C-25.865,-13.139 -26.442,-13.716 -26.442,-14.429L-26.442,-103.077C-26.442,-103.792 -27.022,-104.371 -27.737,-104.371L-44.904,-104.371C-46.816,-104.501 -47.848,-104.697 -49.668,-105.638C-51.041,-106.348 -52.067,-107.492 -52.88,-108.741L-52.88,-104.371L-52.883,-104.371L-52.883,-10.198C-52.883,-10.208 -52.885,-10.218 -52.885,-10.228C-52.885,-2.919 -58.81,3.205 -66.12,3.205L-6.192,3.205C-1.29,3.205 2.579,-1.602 2.579,-7.692L2.579,-113.024C2.579,-119.113 -1.29,-124.081 -6.192,-124.081L-25.138,-124.081C-25.858,-124.081 -26.442,-124.665 -26.442,-125.385L-26.442,-150.031C-26.442,-150.743 -25.865,-151.321 -25.152,-151.321C-24.44,-151.321 -23.862,-150.743 -23.862,-150.031L-23.862,-128.603C-23.862,-127.875 -23.272,-127.285 -22.544,-127.285L-3.959,-127.285C-2.846,-127.127 -1.942,-126.838 -0.632,-126.161C0.74,-125.451 1.766,-124.307 2.579,-123.058L2.579,-156.93C2.579,-159.814 1.677,-162.538 0,-164.621" style="fill-rule:nonzero;"/></g>
+        <g transform="matrix(1,0,0,1,373.2422,209.179)"><path d="M0,148.571L0,16.383C0.004,12.548 0.004,5.961 0.003,-0.027C0.034,-7.31 5.945,-13.205 13.235,-13.205L-26.441,-13.205L-26.441,66.25C-26.441,66.962 -27.019,67.54 -27.731,67.54C-28.444,67.54 -29.021,66.962 -29.021,66.25L-29.021,-13.205L-68.698,-13.205C-61.389,-13.205 -55.463,-7.28 -55.463,0.03L-55.463,3.237L-55.462,3.237L-55.462,148.554C-55.469,155.858 -61.392,161.776 -68.697,161.776L-29.021,161.776L-29.021,85.334C-29.021,84.622 -28.444,84.044 -27.731,84.044C-27.019,84.044 -26.441,84.622 -26.441,85.334L-26.441,161.776L13.234,161.776C5.934,161.776 0.016,155.867 0,148.571" style="fill-rule:nonzero;"/></g>
+      </g></g>
+    </svg>
+    <div class="logo-secret" id="logoSecret"></div>
+  </div>
+
+  <p class="genre-line" id="genreLine">Experimental · Doom · Ritual metal</p>
+  <p class="location">Estonia</p>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<!-- ===== CONTENT ===== -->
+<div class="main">
+
+  <!-- Album + cover -->
+  <div class="album-reveal" id="albumReveal">
+    <div class="cover-wrap">
+      <img id="coverImg" src="cover.jpg" alt="Näljatooja album cover">
+      <div class="cover-overlay"><span>Näljatooja · 2026</span></div>
+    </div>
+    <div class="album-info">
+      <p class="album-label"><span class="dot"></span> Incoming transmission</p>
+      <h2 class="album-title">Näljatooja</h2>
+      <p class="album-desc">Full-length album. Five transmissions.</p>
+      <p class="album-desc" style="color:var(--text-dim)">Currently mixing.</p>
+      <div class="album-status">
+        <div class="album-bar"><div class="album-bar-fill" id="abf"></div></div>
+        <span class="album-bar-label">~70%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Single -->
+  <div class="signal" id="signalBlock">
+    <div class="signal-header"><span class="dot"></span> Freq.001 — Active</div>
+    <p class="signal-title">"Näljatooja" — first single out now.</p>
+    <p class="signal-sub">Search "Synghus" — or follow the signal directly<span class="blink">_</span></p>
+    <div class="stream-links">
+      <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y" target="_blank" rel="noopener">▸ Spotify</a>
+      <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291?i=1814001292" target="_blank" rel="noopener">▸ Apple Music</a>
+      <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng" target="_blank" rel="noopener">▸ YouTube Music</a>
+      <a href="https://tidal.com/artist/60078518" target="_blank" rel="noopener">▸ Tidal</a>
+    </div>
+  </div>
+
+  <!-- Fog lyrics -->
+  <div class="fog-reveal">
+    <p class="fog-hint">. . .</p>
+    <p>Pime öö mind tervitab</p>
+    <p>Tundmatus paigas tallan</p>
+    <p>Kirglikku lõõma ihaledes</p>
+    <p>Piiridest teed ostsin välja</p>
+  </div>
+
+  <!-- Tracklist -->
+  <div class="tracklist" id="tracklist">
+    <p class="tl-header">Transmission log</p>
+    <a class="track" href="ekstaas.html"><span class="track-num">01</span><span class="track-name">Ekstaas</span><span class="track-desc">dark jazz · drone</span></a>
+    <a class="track" href="metalne-maastik.html"><span class="track-num">02</span><span class="track-name">Metalne Maastik</span><span class="track-desc">choral · industrial</span></a>
+    <a class="track" href="naljatooja.html"><span class="track-num">03</span><span class="track-name">Näljatooja</span><span class="track-tag">single</span></a>
+    <a class="track" href="pouaaike.html"><span class="track-num">04</span><span class="track-name">Põuaäike</span><span class="track-desc">anthemic · raw</span></a>
+    <a class="track" href="rituaal.html"><span class="track-num">05</span><span class="track-name">Rituaal</span><span class="track-desc">minimalist · trance</span></a>
+  </div>
+
+  <!-- Rotating quotes from reviews -->
+  <div class="quote-zone" id="quoteZone">
+    <p class="quote-text" id="quoteText">A bleak hymn sung in a cathedral made of iron.</p>
+    <p class="quote-attr" id="quoteAttr">— on Metalne Maastik</p>
+    <div class="quote-nav" id="quoteNav"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span style="text-transform:uppercase">End of transmission</span>
+    <a href="mailto:synghus.band@gmail.com">synghus.band@gmail.com</a>
+    <span>MMXXVI</span>
+  </div>
+</div>
+
+<!-- Void -->
+<div class="void">
+  <div class="vt" id="v1"><p>Sa ikka kerid edasi.</p></div>
+  <div class="vt" id="v2"><p>Siin midagi ei ole.</p><p class="f" style="margin-top:16px">Või on?</p></div>
+  <div class="vt" id="v3"><p>Mu sees tume tühimik</p><p>Mis sosistab, karjub ja oigab</p><p>Udune aimdus tõmbleb</p><p>Tuhande tunde toel</p></div>
+  <div class="vt" id="v4"><p class="f">Kae mu silmilt langeb maha</p><p class="f">Ekstaasikütketes rabelen</p><p class="f" style="margin-top:32px;font-size:11px;letter-spacing:.25em;font-family:var(--mono)">— EKSTAAS</p></div>
+</div>
+
+<!-- Konami overlay -->
+<div class="overlay" id="konamiO">
+  <p>Sosistatud sõna<br>Horisondi kõverdab<br><br>Pilli keeled võnguvad<br>Kehatu saab lihaks</p>
+  <p class="sub">— Rituaal</p>
+  <button onclick="this.parentElement.classList.remove('active')">SULGE</button>
+</div>
+
+<!-- Type "synghus" overlay -->
+<div class="overlay" id="typeO">
+  <p class="review-text">This batch of songs is highly experimental, blending raw, heavy textures with elements you wouldn't expect — like the <em>dark-jazz saxophone</em> in Ekstaas or the solemn, <em>choral chanting</em> in Metalne Maastik. It feels less like a traditional metal project and more like <em>avant-garde music</em> that uses heavy distortion as just one tool in its emotional toolbox.</p>
+  <button onclick="this.parentElement.classList.remove('active')">SULGE</button>
+</div>
+
+<script>
+// ── PARTICLES ──
+const C=document.getElementById('particles'),X=C.getContext('2d');
+let W,H,mX=0,mY=0;
+function sz(){W=C.width=innerWidth;H=C.height=Math.max(document.documentElement.scrollHeight,innerHeight*3)}
+addEventListener('resize',sz);sz();
+let rt;addEventListener('scroll',()=>{clearTimeout(rt);rt=setTimeout(sz,300)});
+addEventListener('mousemove',e=>{mX=e.clientX;mY=e.clientY});
+class Pt{
+  constructor(){this.r()}
+  r(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*1.4+.5;this.vx=(Math.random()-.5)*.1;this.vy=(Math.random()-.5)*.07-.02;this.o=Math.random()*.22+.04;this.l=Math.random()*1100+500;this.a=0}
+  u(){const sy=scrollY,dx=mX-this.x,dy=(mY+sy)-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d<180){this.vx-=dx*3e-6;this.vy-=dy*3e-6}this.x+=this.vx;this.y+=this.vy;this.a++;if(this.a>this.l||this.x<-10||this.x>W+10||this.y<-10||this.y>H+10)this.r()}
+  d(){const f=Math.min(1,this.a/70)*Math.min(1,(this.l-this.a)/70);X.beginPath();X.arc(this.x,this.y,this.s,0,Math.PI*2);X.fillStyle=`rgba(180,175,155,${this.o*f})`;X.fill()}
+}
+const P=[];
+for(let i=0;i<38;i++)P.push(new Pt);
+!function a(){X.clearRect(0,0,W,H);P.forEach(p=>{p.u();p.d()});requestAnimationFrame(a)}();
+
+// ── GLITCH ──
+function glitch(){
+  const t=Math.random(),gL=document.getElementById('gLine'),gT=document.getElementById('genreLine');
+  if(t<.3){document.body.classList.add('gl');setTimeout(()=>document.body.classList.remove('gl'),150)}
+  else if(t<.5){gL.style.top=Math.random()*100+'%';gL.classList.add('flash');setTimeout(()=>gL.classList.remove('flash'),120)}
+  else if(t<.7){gT.style.animation='tGl .15s steps(3) 1';setTimeout(()=>gT.style.animation='',150)}
+  else{document.querySelectorAll('.gBlock').forEach(b=>{b.style.top=Math.random()*100+'%';b.style.left=Math.random()*80+'%';b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),100)})}
+  setTimeout(glitch,14e3+Math.random()*40e3)
+}
+setTimeout(glitch,7e3+Math.random()*10e3);
+
+// ── SCROLL REVEAL ──
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('vis');if(en.target.id==='albumReveal')setTimeout(()=>document.getElementById('abf').classList.add('anim'),500)}})},{threshold:.1});
+document.querySelectorAll('.album-reveal,.signal,.tracklist,.quote-zone,.vt').forEach(el=>obs.observe(el));
+
+// ── QUOTE ROTATOR ──
+const quotes=[
+  {t:'A bleak hymn sung in a cathedral made of iron.',a:'— on Metalne Maastik'},
+  {t:'Pure, suffocating atmosphere, designed to place the listener into a trance-like state.',a:'— on Rituaal'},
+  {t:'A desperate, emotional release, shifting dynamically with the music.',a:'— on Näljatooja'},
+  {t:'Deeply textured, emotional, and surprisingly different.',a:'— on Ekstaas'},
+  {t:'A final, monumental push through a storm.',a:'— on Põuaäike'}
+];
+let qi=0;const qT=document.getElementById('quoteText'),qA=document.getElementById('quoteAttr'),qN=document.getElementById('quoteNav');
+quotes.forEach((_,i)=>{const d=document.createElement('div');d.className='quote-dot'+(i===0?' active':'');d.onclick=()=>showQ(i);qN.appendChild(d)});
+function showQ(i){qi=i;qT.style.opacity=0;setTimeout(()=>{qT.textContent=quotes[i].t;qA.textContent=quotes[i].a;qT.style.opacity=1;document.querySelectorAll('.quote-dot').forEach((d,j)=>d.classList.toggle('active',j===i))},300)}
+setInterval(()=>showQ((qi+1)%quotes.length),8000);
+
+// ── LOGO CLICKS ──
+let lc=0;const ls=document.getElementById('logoSecret');
+const lm=['','','','hmm...','...','jätka','...','sa oled kannatlik','...','ema oma lapse vaikselt lämmatab','ihu saab ihuks','söödud soolata'];
+document.getElementById('logoWrap').addEventListener('click',()=>{
+  lc++;if(lc>=3&&lc<lm.length){ls.textContent=lm[lc];ls.classList.add('show');setTimeout(()=>ls.classList.remove('show'),3500)}
+  else if(lc>=lm.length){document.body.style.filter='invert(1) hue-rotate(180deg)';setTimeout(()=>document.body.style.filter='',600);lc=0}
+});
+
+// ── KONAMI ──
+const ks=[38,38,40,40,37,39,37,39,66,65];let ki=0;
+addEventListener('keydown',e=>{if(e.keyCode===ks[ki]){ki++;if(ki===ks.length){document.getElementById('konamiO').classList.add('active');ki=0}}else ki=0});
+
+// ── TYPE "SYNGHUS" ──
+const tw='synghus';let ti=0;
+addEventListener('keydown',e=>{
+  if(document.querySelector('.overlay.active'))return;
+  if(e.key.toLowerCase()===tw[ti]){ti++;if(ti===tw.length){document.getElementById('typeO').classList.add('active');ti=0}}
+  else{ti=e.key.toLowerCase()===tw[0]?1:0}
+});
+
+// ── MIDNIGHT ──
+const hr=new Date().getHours();
+if(hr>=0&&hr<5){
+  document.documentElement.style.setProperty('--bg','#0e1418');
+  document.documentElement.style.setProperty('--text-dim','#3a4038');
+  const m=document.createElement('div');
+  m.style.cssText='position:fixed;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;color:#1a2220;letter-spacing:.2em;z-index:2;pointer-events:none;font-family:var(--serif);font-style:italic';
+  m.textContent='sa ei peaks ärkvel olema';
+  document.body.appendChild(m);
+}
+</script>
+</body>
+</html>
