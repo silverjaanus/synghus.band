@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <!--
     SYNGHUS — the door is never the same twice.
-    Four rooms. The house decides which one you enter.
+    Six rooms. Every visit, every refresh, the house decides which one you enter.
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SYNGHUS</title>
-<style>html,body{margin:0;height:100%;background:#0e0e0c}</style>
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#0e0e0c;overflow:hidden}
+  #room{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+</style>
+</head>
+<body>
+<iframe id="room" title="SYNGHUS"></iframe>
 <script>
 (function () {
   var rooms = ["v1.html", "v2.html", "v3.html", "v4.html", "v5.html", "v6.html"];
-  location.replace(rooms[Math.floor(Math.random() * rooms.length)]);
+  var pick = rooms[Math.floor(Math.random() * rooms.length)];
+  // Cache-bust so the browser never re-serves the same room from a stale refresh.
+  document.getElementById("room").src = pick + "?r=" + Date.now();
 })();
 </script>
-<noscript><meta http-equiv="refresh" content="0;url=v4.html"></noscript>
-</head>
-<body></body>
+<noscript>
+  <iframe src="v4.html" style="position:fixed;inset:0;width:100%;height:100%;border:0"></iframe>
+</noscript>
+</body>
 </html>
