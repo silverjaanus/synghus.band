@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYNGHUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--black:#060606; --bone:#c9c4b8; --dim:#5e5a52; --ember:#6e2c1c}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black); color:var(--bone); font-family:'EB Garamond',serif; overflow-x:hidden}
+
+section{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem; text-align:center}
+
+/* sigil */
+.sigil{width:min(420px,78vw); filter:invert(.85) sepia(.08); animation:breathe 9s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:.92}}
+.hero p{
+  margin-top:3.5rem; font-family:'Cinzel',serif; letter-spacing:.55em;
+  font-size:.85rem; color:var(--dim); text-transform:uppercase;
+}
+.down{
+  margin-top:5rem; color:var(--dim); text-decoration:none; font-size:1.6rem;
+  animation:sink 3s ease-in-out infinite;
+}
+@keyframes sink{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+.album h2{
+  font-family:'Cinzel',serif; font-weight:400; letter-spacing:.5em;
+  font-size:clamp(1.4rem,4vw,2.4rem); color:var(--bone); margin-bottom:4rem;
+}
+.tracks{list-style:none}
+.tracks li{margin:2.4rem 0}
+.tracks a{
+  color:var(--dim); text-decoration:none; font-family:'Cinzel',serif;
+  letter-spacing:.4em; font-size:clamp(1rem,2.6vw,1.3rem); text-transform:uppercase;
+  transition:color 1.2s, letter-spacing 1.2s;
+}
+.tracks a:hover{color:var(--bone); letter-spacing:.55em}
+
+.word{max-width:520px; font-style:italic; font-size:1.35rem; color:var(--dim); line-height:2.2}
+
+.presence a{
+  display:block; margin:1.6rem 0; color:var(--dim); text-decoration:none;
+  font-family:'Cinzel',serif; letter-spacing:.5em; font-size:.85rem; text-transform:uppercase;
+  transition:color 1s;
+}
+.presence a:hover{color:var(--bone)}
+.presence .mail{margin-top:4rem; font-family:'EB Garamond',serif; font-style:italic; letter-spacing:.1em; text-transform:none; font-size:1rem}
+
+.reveal{opacity:0; transform:translateY(24px); transition:opacity 2s ease, transform 2s ease}
+.reveal.on{opacity:1; transform:none}
+
+/* faint slow grain */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; opacity:.25;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img class="sigil" src="synghus_logo.svg" alt="SYNGHUS">
+  <p>Doom &nbsp;·&nbsp; Experimental &nbsp;·&nbsp; Ritual Metal</p>
+  <a class="down" href="#album">↓</a>
+</section>
+
+<section class="album" id="album">
+  <h2 class="reveal">NÄLJATOOJA</h2>
+  <ul class="tracks reveal">
+    <li><a href="ekstaas.html">Ekstaas</a></li>
+    <li><a href="metalne-maastik.html">Metalne maastik</a></li>
+    <li><a href="naljatooja.html">Näljatooja</a></li>
+    <li><a href="pouaaike.html">Põuaäike</a></li>
+    <li><a href="rituaal.html">Rituaal</a></li>
+  </ul>
+</section>
+
+<section>
+  <p class="word reveal">kutsun tuule siia<br>manan hääle ära<br><br>sosistatud sõna<br>horisonti kõverdab</p>
+</section>
+
+<section class="presence">
+  <div class="reveal">
+    <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
+    <a href="https://tidal.com/artist/60078518/u">Tidal</a>
+    <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple Music</a>
+    <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube</a>
+    <a class="mail" href="mailto:synghus.band@gmail.com">synghus.band@gmail.com</a>
+  </div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.2});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

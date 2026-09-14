@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYNGHUS — Näljatooja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#e2d6ba; --ink:#221a12; --ink-soft:#4a3f31; --oxide:#7a2c1a}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:#030202; overflow-x:hidden; font-family:'Cormorant Garamond',serif; cursor:none}
+
+/* ======= THE HIDDEN PAGE (revealed by candle) ======= */
+#page{
+  position:relative; min-height:100vh; background:var(--paper); color:var(--ink);
+  -webkit-mask-image:radial-gradient(circle var(--r,0px) at var(--x,50%) var(--y,40%),
+      #000 0%, rgba(0,0,0,.85) 55%, transparent 100%);
+  mask-image:radial-gradient(circle var(--r,0px) at var(--x,50%) var(--y,40%),
+      #000 0%, rgba(0,0,0,.85) 55%, transparent 100%);
+}
+#page::before{ /* paper grain */
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.22 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.inner{max-width:860px; margin:0 auto; padding:5rem 2rem 4rem; text-align:center; position:relative; z-index:2}
+.logo{width:min(320px,65vw); opacity:.92}
+.tagline{font-family:'IM Fell English',serif; letter-spacing:.3em; font-size:.85rem; color:var(--ink-soft); margin:1.2rem 0 3rem; text-transform:uppercase}
+.relic{margin:0 auto 3.5rem; max-width:480px; padding:1.1rem; border:1px solid var(--ink-soft); outline:1px solid var(--ink-soft); outline-offset:5px; background:#d6c9a8; transform:rotate(-.4deg); box-shadow:0 10px 34px rgba(20,12,4,.4)}
+.relic img{width:100%; display:block; filter:sepia(.25) contrast(1.05) saturate(.85)}
+h2.reg{font-family:'IM Fell English',serif; font-weight:400; letter-spacing:.4em; color:var(--oxide); font-size:1rem; margin-bottom:1.8rem}
+.track{display:block; padding:.85rem 0; border-bottom:1px dotted var(--ink-soft); text-decoration:none; color:inherit; font-size:1.4rem; letter-spacing:.05em; transition:color .3s, letter-spacing .3s}
+.track:hover{color:var(--oxide); letter-spacing:.12em}
+.track small{font-family:'IM Fell English',serif; color:var(--oxide); margin-right:.9rem}
+.links{margin:3rem 0 1rem}
+.links a{display:inline-block; margin:.3rem .8rem; color:var(--ink); text-decoration:none; letter-spacing:.28em; font-size:.85rem; font-family:'IM Fell English',serif}
+.links a:hover{color:var(--oxide)}
+.mail{font-style:italic; color:var(--ink-soft); font-size:.95rem}
+.mail a{color:inherit}
+
+/* ======= CANDLE FLAME (cursor) ======= */
+#flame{
+  position:fixed; z-index:60; pointer-events:none; left:0; top:0;
+  width:44px; height:78px; transform:translate(-50%,-88%);
+}
+/* outer aura */
+#flame .aura{
+  position:absolute; inset:-55% -80%; border-radius:50%;
+  background:radial-gradient(ellipse at 50% 60%, rgba(255,150,50,.4) 0%, rgba(230,90,20,.15) 45%, transparent 70%);
+  filter:blur(6px); animation:aurap 1.3s ease-in-out infinite alternate;
+}
+@keyframes aurap{from{opacity:.7; transform:scale(.95)}to{opacity:1; transform:scale(1.1)}}
+/* flame body — teardrop */
+#flame .body{
+  position:absolute; left:50%; bottom:6px; width:26px; height:58px; margin-left:-13px;
+  background:linear-gradient(180deg, #ffdf9e 0%, #ffb347 30%, #f07f1d 62%, #c94f12 85%, rgba(150,40,10,.0) 100%);
+  border-radius:50% 50% 42% 42%/72% 72% 28% 28%;
+  filter:blur(1.2px);
+  transform-origin:50% 95%;
+  animation:sway 2.1s ease-in-out infinite, lick .32s ease-in-out infinite alternate;
+}
+/* inner tongue */
+#flame .inner{
+  position:absolute; left:50%; bottom:9px; width:13px; height:34px; margin-left:-6.5px;
+  background:linear-gradient(180deg, #fffbe8 0%, #ffe9a8 55%, rgba(255,190,90,0) 100%);
+  border-radius:50% 50% 45% 45%/70% 70% 30% 30%;
+  filter:blur(.8px); transform-origin:50% 100%;
+  animation:sway 2.1s ease-in-out infinite reverse, lick .26s ease-in-out infinite alternate;
+}
+/* blue base */
+#flame .base{
+  position:absolute; left:50%; bottom:4px; width:16px; height:12px; margin-left:-8px;
+  background:radial-gradient(ellipse at 50% 30%, rgba(120,170,255,.85) 0%, rgba(60,90,220,.4) 60%, transparent 100%);
+  border-radius:50%; filter:blur(1px);
+}
+@keyframes sway{0%,100%{transform:rotate(-3.5deg) skewX(-2deg)}50%{transform:rotate(3.5deg) skewX(2deg)}}
+@keyframes lick{from{transform:scaleY(.94) scaleX(1.04)}to{transform:scaleY(1.12) scaleX(.92)}}
+/* warm glow above everything, follows cursor */
+#glow{
+  position:fixed; inset:0; z-index:55; pointer-events:none; mix-blend-mode:soft-light;
+  background:radial-gradient(circle calc(var(--r,0px)*1.1) at var(--x,50%) var(--y,40%),
+     rgba(255,180,80,.9) 0%, rgba(255,140,50,.25) 55%, transparent 100%);
+}
+
+/* ======= INTRO HINT ======= */
+#hint{
+  position:fixed; inset:0; z-index:40; display:flex; align-items:center; justify-content:center;
+  color:#8a7c62; font-family:'IM Fell English',serif; font-style:italic; letter-spacing:.25em;
+  font-size:1rem; text-align:center; padding:2rem; transition:opacity 2s;
+  pointer-events:none; text-transform:lowercase;
+}
+#hint.gone{opacity:0}
+
+/* dark vignette always on top of paper */
+#vign{position:fixed; inset:0; z-index:30; pointer-events:none; box-shadow:inset 0 0 30vmin rgba(0,0,0,.9)}
+
+@media (hover:none){ body{cursor:auto} #flame{display:none} }
+</style>
+</head>
+<body>
+
+<div id="page">
+  <div class="inner">
+    <img class="logo" src="synghus_logo.svg" alt="SYNGHUS">
+    <p class="tagline">Doom · Experimental · Ritual Metal</p>
+
+    <div class="relic"><img src="cover.jpg" alt="Näljatooja"></div>
+
+    <h2 class="reg">NÄLJATOOJA · MMXXVI</h2>
+    <nav style="max-width:420px; margin:0 auto">
+      <a class="track" href="ekstaas.html"><small>I.</small>Ekstaas</a>
+      <a class="track" href="metalne-maastik.html"><small>II.</small>Metalne maastik</a>
+      <a class="track" href="naljatooja.html"><small>III.</small>Näljatooja</a>
+      <a class="track" href="pouaaike.html"><small>IV.</small>Põuaäike</a>
+      <a class="track" href="rituaal.html"><small>V.</small>Rituaal</a>
+    </nav>
+
+    <div class="links">
+      <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">SPOTIFY</a>
+      <a href="https://tidal.com/artist/60078518/u">TIDAL</a>
+      <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">APPLE</a>
+      <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YOUTUBE</a>
+    </div>
+    <p class="mail"><a href="mailto:synghus.band@gmail.com">synghus.band@gmail.com</a></p>
+  </div>
+</div>
+
+<div id="glow"></div>
+<div id="vign"></div>
+<div id="hint">liiguta valgust · pimedus taganeb</div>
+<div id="flame"><div class="aura"></div><div class="body"></div><div class="inner"></div><div class="base"></div></div>
+
+<script>
+const root=document.documentElement, flame=document.getElementById('flame'), hint=document.getElementById('hint');
+let started=false, tx=innerWidth/2, ty=innerHeight*0.4, x=tx, y=ty, r=0, tr=0;
+
+function start(){ if(!started){started=true; hint.classList.add('gone'); tr=Math.min(innerWidth,innerHeight)*0.38;} }
+addEventListener('mousemove',e=>{tx=e.clientX; ty=e.clientY; start();});
+addEventListener('touchstart',e=>{const t=e.touches[0]; tx=t.clientX; ty=t.clientY; start();},{passive:true});
+addEventListener('touchmove',e=>{const t=e.touches[0]; tx=t.clientX; ty=t.clientY;},{passive:true});
+/* grow reveal slowly the longer you explore */
+let grow=0;
+setInterval(()=>{ if(started && grow<1){ grow+=0.004; tr=Math.min(innerWidth,innerHeight)*(0.38+grow*0.5);} },100);
+
+(function loop(){
+  x+=(tx-x)*0.14; y+=(ty-y)*0.14; r+=(tr-r)*0.05;
+  const fl=1+Math.sin(Date.now()/90)*0.04+Math.random()*0.03; /* candle flicker */
+  root.style.setProperty('--x',x+'px');
+  root.style.setProperty('--y',(y+scrollY)+'px');
+  root.style.setProperty('--r',(r*fl)+'px');
+  document.getElementById('glow').style.setProperty('--x',x+'px');
+  document.getElementById('glow').style.setProperty('--y',y+'px');
+  document.getElementById('glow').style.setProperty('--r',(r*fl)+'px');
+  flame.style.left=x+'px'; flame.style.top=y+'px';
+  requestAnimationFrame(loop);
+})();
+/* touch devices: start with centered light */
+if(matchMedia('(hover:none)').matches){ start(); }
+</script>
+</body>
+</html>

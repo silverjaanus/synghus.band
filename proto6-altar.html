@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYNGHUS — Altar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c8a15c; --bone:#e0d8c4; --blood:#7e2f1d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#050403; overflow:hidden; font-family:'Cormorant Garamond',serif; height:100vh}
+
+/* ALTAR = the painting itself, full screen */
+#altar{position:fixed; inset:0}
+#altar .img{
+  position:absolute; inset:-4%;
+  background:url('cover.jpg') center/cover no-repeat;
+  animation:breathe 22s ease-in-out infinite alternate;
+  filter:brightness(.8) saturate(.9);
+}
+@keyframes breathe{from{transform:scale(1)}to{transform:scale(1.06)}}
+#altar .shade{position:absolute; inset:0; background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(5,4,3,.88) 100%)}
+
+/* grain */
+body::after{
+  content:""; position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .5s steps(3) infinite;
+}
+@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-4px,3px)}66%{transform:translate(3px,-4px)}100%{transform:translate(0,0)}}
+
+/* HEADER */
+header{position:fixed; top:0; left:0; right:0; z-index:20; text-align:center; padding:1.6rem 1rem .8rem;
+  background:linear-gradient(180deg, rgba(5,4,3,.85), transparent)}
+header img{width:min(220px,48vw); filter:invert(.88) drop-shadow(0 2px 10px #000)}
+header p{font-family:'IM Fell English',serif; color:var(--gold); letter-spacing:.45em; font-size:.7rem; text-transform:uppercase; margin-top:.7rem}
+
+/* HOTSPOTS — sigils on the painting */
+.spot{position:absolute; z-index:10; width:64px; height:64px; margin:-32px 0 0 -32px; cursor:pointer; text-decoration:none}
+.spot .ring{
+  position:absolute; inset:0; border:1px solid rgba(224,216,196,.55); border-radius:50%;
+  animation:pulse 4s ease-in-out infinite;
+}
+.spot .ring::before{content:""; position:absolute; inset:9px; border:1px dotted rgba(200,161,92,.6); border-radius:50%}
+.spot .num{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'IM Fell English',serif; color:var(--bone); font-size:1rem; text-shadow:0 1px 6px #000;
+}
+@keyframes pulse{0%,100%{transform:scale(.92); opacity:.5}50%{transform:scale(1.05); opacity:1}}
+.spot .name{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap;
+  font-family:'IM Fell English',serif; font-size:clamp(1.6rem,4vw,2.6rem); color:var(--bone);
+  letter-spacing:.15em; text-shadow:0 2px 18px #000, 0 0 40px rgba(0,0,0,.9);
+  opacity:0; transition:opacity .5s; pointer-events:none;
+}
+.spot:hover .name,.spot:focus .name{opacity:1}
+.spot:hover .ring{border-color:var(--gold); animation-play-state:paused; transform:scale(1.15)}
+
+/* FOOTER */
+footer{position:fixed; bottom:0; left:0; right:0; z-index:20; text-align:center; padding:1rem 1rem 1.4rem;
+  background:linear-gradient(0deg, rgba(5,4,3,.9), transparent)}
+footer a{color:var(--bone); text-decoration:none; font-family:'IM Fell English',serif; letter-spacing:.3em;
+  font-size:.75rem; margin:0 .8rem; text-transform:uppercase; transition:color .3s}
+footer a:hover{color:var(--gold)}
+footer .hintline{display:block; font-style:italic; font-family:'Cormorant Garamond',serif; color:rgba(224,216,196,.55);
+  letter-spacing:.15em; font-size:.9rem; margin-bottom:.7rem; text-transform:none}
+
+/* mobile: list fallback under painting */
+#mobileList{display:none}
+@media(max-width:640px){
+  .spot .name{display:none}
+  .spot{width:46px;height:46px;margin:-23px 0 0 -23px}
+  #mobileList{display:block; position:fixed; z-index:21; bottom:4.6rem; left:0; right:0; text-align:center}
+  #mobileList a{display:inline-block; margin:.2rem .5rem; color:var(--bone); font-family:'IM Fell English',serif;
+    text-decoration:none; letter-spacing:.12em; font-size:1rem; text-shadow:0 1px 8px #000}
+}
+</style>
+</head>
+<body>
+
+<div id="altar">
+  <div class="img"></div>
+  <div class="shade"></div>
+
+  <!-- hotspots: positioned on painting features -->
+  <a class="spot" style="top:26%; left:47%" href="ekstaas.html" aria-label="Ekstaas">
+    <span class="ring"></span><span class="num">I</span><span class="name">Ekstaas</span></a>
+  <a class="spot" style="top:40%; left:85%" href="metalne-maastik.html" aria-label="Metalne maastik">
+    <span class="ring"></span><span class="num">II</span><span class="name">Metalne maastik</span></a>
+  <a class="spot" style="top:52%; left:52%" href="naljatooja.html" aria-label="Näljatooja">
+    <span class="ring"></span><span class="num">III</span><span class="name">Näljatooja</span></a>
+  <a class="spot" style="top:16%; left:16%" href="pouaaike.html" aria-label="Põuaäike">
+    <span class="ring"></span><span class="num">IV</span><span class="name">Põuaäike</span></a>
+  <a class="spot" style="top:62%; left:12%" href="rituaal.html" aria-label="Rituaal">
+    <span class="ring"></span><span class="num">V</span><span class="name">Rituaal</span></a>
+</div>
+
+<header>
+  <img src="synghus_logo.svg" alt="SYNGHUS">
+  <p>Doom · Experimental · Ritual Metal</p>
+</header>
+
+<div id="mobileList">
+  <a href="ekstaas.html">Ekstaas</a><a href="metalne-maastik.html">Metalne maastik</a><a href="naljatooja.html">Näljatooja</a><a href="pouaaike.html">Põuaäike</a><a href="rituaal.html">Rituaal</a>
+</div>
+
+<footer>
+  <span class="hintline">viis märki altaril — puuduta neid</span>
+  <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
+  <a href="https://tidal.com/artist/60078518/u">Tidal</a>
+  <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple</a>
+  <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube</a>
+  <a href="mailto:synghus.band@gmail.com">Kiri</a>
+</footer>
+
+<script>
+/* parallax: painting drifts slightly away from cursor */
+const img=document.querySelector('#altar .img');
+addEventListener('mousemove',e=>{
+  const dx=(e.clientX/innerWidth-.5)*-14, dy=(e.clientY/innerHeight-.5)*-10;
+  img.style.translate=dx+'px '+dy+'px';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYNGHUS // NÄLJATOOJA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d0d; --fg:#e8e4dc; --rust:#8b3a1e; --acid:#c8c22e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg); color:var(--fg); font-family:'Space Mono',monospace; overflow-x:hidden}
+::selection{background:var(--rust); color:var(--fg)}
+
+.ticker{
+  border-bottom:3px solid var(--fg); padding:.5rem 0; white-space:nowrap; overflow:hidden;
+  font-size:.8rem; letter-spacing:.15em; text-transform:uppercase;
+}
+.ticker span{display:inline-block; animation:tick 25s linear infinite}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.grid{display:grid; grid-template-columns:repeat(12,1fr); gap:0; border-bottom:3px solid var(--fg)}
+.cell{border-right:3px solid var(--fg); padding:1.5rem}
+.cell:last-child{border-right:none}
+
+.title-block{grid-column:1/9; padding:3rem 2rem}
+h1{
+  font-family:'Archivo Black',sans-serif; font-size:clamp(3rem,11vw,9rem);
+  line-height:.9; letter-spacing:-.02em; text-transform:uppercase;
+}
+h1 .off{color:var(--rust)}
+.tagline{margin-top:1.5rem; font-size:.85rem; letter-spacing:.3em; text-transform:uppercase; color:var(--acid)}
+
+.meta{grid-column:9/13; font-size:.75rem; line-height:2; text-transform:uppercase; display:flex; flex-direction:column; justify-content:flex-end}
+.meta b{color:var(--rust)}
+
+.coverrow{display:grid; grid-template-columns:1fr 1fr; border-bottom:3px solid var(--fg)}
+.coverrow .img{border-right:3px solid var(--fg)}
+.coverrow img{width:100%; display:block; filter:grayscale(.4) contrast(1.2)}
+.coverrow img:hover{filter:none}
+.coverrow .blurb{padding:2rem; display:flex; flex-direction:column; justify-content:center; gap:1.5rem}
+.coverrow .blurb p{font-size:.9rem; line-height:1.9}
+.coverrow .blurb .lbl{color:var(--rust); font-weight:700; letter-spacing:.2em}
+@media(max-width:700px){.coverrow{grid-template-columns:1fr}.coverrow .img{border-right:none;border-bottom:3px solid var(--fg)}}
+
+.tracklist{border-bottom:3px solid var(--fg)}
+.trk{
+  display:flex; align-items:center; gap:2rem; padding:1.4rem 2rem;
+  border-bottom:1px solid #333; text-decoration:none; color:var(--fg);
+  font-size:clamp(1.1rem,3.4vw,2rem); text-transform:uppercase; font-weight:700;
+  transition:background .15s, color .15s, padding-left .15s;
+}
+.trk:last-child{border-bottom:none}
+.trk:hover{background:var(--fg); color:var(--bg); padding-left:3rem}
+.trk .n{font-size:.75rem; color:var(--rust); font-weight:400}
+.trk:hover .n{color:var(--rust)}
+.trk .len{margin-left:auto; font-size:.75rem; font-weight:400; letter-spacing:.2em}
+
+.linksrow{display:grid; grid-template-columns:repeat(4,1fr); border-bottom:3px solid var(--fg)}
+.linksrow a{
+  padding:1.6rem .5rem; text-align:center; text-decoration:none; color:var(--fg);
+  border-right:3px solid var(--fg); text-transform:uppercase; font-size:.8rem; letter-spacing:.25em;
+  transition:.15s;
+}
+.linksrow a:last-child{border-right:none}
+.linksrow a:hover{background:var(--acid); color:var(--bg)}
+@media(max-width:700px){.linksrow{grid-template-columns:repeat(2,1fr)} .linksrow a:nth-child(2){border-right:none} .linksrow a:nth-child(-n+2){border-bottom:3px solid var(--fg)}}
+
+footer{padding:2rem; font-size:.75rem; text-transform:uppercase; letter-spacing:.2em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem}
+footer a{color:var(--acid)}
+</style>
+</head>
+<body>
+
+<div class="ticker"><span>NÄLJATOOJA ON TEEL /// THE HUNGER GROWS /// DOOM * EXPERIMENTAL * RITUAL METAL /// NÄLJATOOJA ON TEEL /// THE HUNGER GROWS /// DOOM * EXPERIMENTAL * RITUAL METAL /// </span></div>
+
+<div class="grid">
+  <div class="cell title-block">
+    <h1>SYNG<span class="off">HUS</span></h1>
+    <p class="tagline">Doom * Experimental * Ritual Metal</p>
+  </div>
+  <div class="cell meta">
+    <p><b>ALBUM:</b> NÄLJATOOJA<br><b>LUGUSID:</b> 05<br><b>AASTA:</b> MMXXVI<br><b>PÄRITOLU:</b> EESTI</p>
+  </div>
+</div>
+
+<div class="coverrow">
+  <div class="img"><img src="cover.jpg" alt="Näljatooja"></div>
+  <div class="blurb">
+    <p class="lbl">// ARHIIV</p>
+    <p>"Less like a traditional metal project and more like avant-garde music that uses heavy distortion as just one tool in its emotional toolbox."</p>
+    <p>&gt; mu sees tume tühimik<br>&gt; mis sosistab, karjub ja oigab</p>
+  </div>
+</div>
+
+<nav class="tracklist">
+  <a class="trk" href="ekstaas.html"><span class="n">01</span>Ekstaas<span class="len">DRONE/JAZZ</span></a>
+  <a class="trk" href="metalne-maastik.html"><span class="n">02</span>Metalne maastik<span class="len">RITUAL/INDUSTRIAL</span></a>
+  <a class="trk" href="naljatooja.html"><span class="n">03</span>Näljatooja<span class="len">DOOM/SLUDGE</span></a>
+  <a class="trk" href="pouaaike.html"><span class="n">04</span>Põuaäike<span class="len">MARCH/STORM</span></a>
+  <a class="trk" href="rituaal.html"><span class="n">05</span>Rituaal<span class="len">DRONE/VOID</span></a>
+</nav>
+
+<div class="linksrow">
+  <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
+  <a href="https://tidal.com/artist/60078518/u">Tidal</a>
+  <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple</a>
+  <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube</a>
+</div>
+
+<footer>
+  <span>SYNGHUS © MMXXVI</span>
+  <a href="mailto:synghus.band@gmail.com">synghus.band@gmail.com</a>
+</footer>
+
+</body>
+</html>

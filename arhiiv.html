@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYNGHUS // ARHIIV</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="synghus_logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d0d; --fg:#e8e4dc; --rust:#8b3a1e; --acid:#c8c22e; --dim:#2c2b28; --mute:#8f8a7e; --rule:3px solid var(--fg);
+  --mono:'Space Mono',ui-monospace,'Courier New',monospace; --black:'Archivo Black',Impact,'Arial Black',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg); color:var(--fg); font-family:var(--mono); line-height:1.5; overflow-x:hidden}
+::selection{background:var(--rust); color:#e8e4dc}
+a{color:inherit}
+a:focus-visible{outline:3px solid var(--acid); outline-offset:-3px}
+header{display:grid; grid-template-columns:2fr 1fr; border-bottom:var(--rule)}
+header > div{padding:2.4rem 2rem}
+header > div:first-child{border-right:var(--rule)}
+h1{font-family:var(--black); font-size:clamp(2.4rem,8vw,6rem); line-height:.9; text-transform:uppercase; letter-spacing:-.02em}
+.tag{margin-top:1rem; font-size:.8rem; letter-spacing:.3em; text-transform:uppercase; color:var(--acid)}
+.note{font-size:.8rem; line-height:1.9; color:var(--mute); display:flex; flex-direction:column; justify-content:flex-end; gap:1rem}
+.note a{color:var(--fg); text-decoration:none; text-transform:uppercase; letter-spacing:.2em; font-size:.75rem}
+.note a:hover{color:var(--acid)}
+h2{font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; color:var(--rust); padding:1rem 2rem; border-bottom:1px solid var(--dim)}
+.room{display:flex; align-items:baseline; gap:1.5rem; padding:1.2rem 2rem; border-bottom:1px solid var(--dim); text-decoration:none; transition:background .15s,color .15s,padding-left .15s}
+.room:hover{background:var(--fg); color:var(--bg); padding-left:3rem}
+.room .n{font-size:.75rem; color:var(--rust); font-variant-numeric:tabular-nums; min-width:2.5rem}
+.room .t{font-family:var(--black); font-size:clamp(1rem,2.6vw,1.5rem); text-transform:uppercase}
+.room .d{margin-left:auto; font-size:.75rem; color:var(--mute); text-align:right; max-width:50%}
+.room:hover .d{color:var(--bg)}
+section{border-bottom:var(--rule)}
+footer{padding:2rem; font-size:.75rem; text-transform:uppercase; letter-spacing:.2em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem}
+footer a{color:var(--acid); text-decoration:none}
+@media(max-width:760px){
+  header{grid-template-columns:1fr}
+  header > div{padding:1.6rem 1.2rem}
+  header > div:first-child{border-right:none; border-bottom:var(--rule)}
+  h2,.room{padding-left:1.2rem; padding-right:1.2rem}
+  .room{flex-wrap:wrap}
+  .room .d{margin-left:0; max-width:100%; text-align:left; flex-basis:100%}
+  footer{padding:1.5rem 1.2rem}
+}
+@media(prefers-reduced-motion:reduce){.room{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Arhiiv</h1>
+    <p class="tag">Vanad toad — 2026</p>
+  </div>
+  <div class="note">
+    <p>Enne praegust lehte avanes synghus.band igal külastusel juhuslikult ühte kuuest toast. Siin on need kõik alles, koos hilisemate visanditega.</p>
+    <a href="index.html">← Tagasi</a>
+  </div>
+</header>
+
+<section>
+  <h2>Kuus tuba — index loosis igal laadimisel ühe</h2>
+  <a class="room" href="v1.html"><span class="n">01</span><span class="t">Kombineeritud I</span><span class="d">Üheleheline, kaas sisse pakitud</span></a>
+  <a class="room" href="v2.html"><span class="n">02</span><span class="t">Kombineeritud II</span><span class="d">Sama pere, teine variatsioon</span></a>
+  <a class="room" href="v3.html"><span class="n">03</span><span class="t">Kombineeritud III</span><span class="d">Kolmas variatsioon</span></a>
+  <a class="room" href="v4.html"><span class="n">04</span><span class="t">Reimagined</span><span class="d">Teal ja oliiv, osakesed, udu, viis lugude lehte</span></a>
+  <a class="room" href="v5.html"><span class="n">05</span><span class="t">Ugly</span><span class="d">Töölaua aknad, marquee, happeroheline — ära vajuta INVOKE</span></a>
+  <a class="room" href="v6.html"><span class="n">06</span><span class="t">Hybrid</span><span class="d">Ugly ja rituaal koos</span></a>
+</section>
+
+<section>
+  <h2>Visandid — august 2026</h2>
+  <a class="room" href="proto1-arhiiv.html"><span class="n">P1</span><span class="t">Arhiiv</span><span class="d">Vana paber, tint, register</span></a>
+  <a class="room" href="proto2-monoliit.html"><span class="n">P2</span><span class="t">Monoliit</span><span class="d">Must, hingav sigil, aeglane</span></a>
+  <a class="room" href="proto3-udu.html"><span class="n">P3</span><span class="t">Udu</span><span class="d">Täisekraani kaas, udukihid, filmitera</span></a>
+  <a class="room" href="proto4-brutalism.html"><span class="n">P4</span><span class="t">Brutalism</span><span class="d">Praeguse lehe alus</span></a>
+  <a class="room" href="proto5-kyynal.html"><span class="n">P5</span><span class="t">Küünal</span><span class="d">Leht, mida näeb ainult küünlavalgel</span></a>
+  <a class="room" href="proto6-altar.html"><span class="n">P6</span><span class="t">Altar</span><span class="d">Viis märki maalil</span></a>
+  <a class="room" href="proto7-vhs.html"><span class="n">P7</span><span class="t">VHS</span><span class="d">Lindikahin, tilkumine, loendur</span></a>
+</section>
+
+<footer>
+  <span>SYNGHUS © MMXXVI</span>
+  <a href="index.html">← Tagasi</a>
+</footer>
+
+</body>
+</html>

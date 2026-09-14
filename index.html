@@ -1,30 +1,375 @@
 <!DOCTYPE html>
-<!--
-    SYNGHUS — the door is never the same twice.
-    Six rooms. Every visit, every refresh, the house decides which one you enter.
--->
-<html lang="en">
+<html lang="et">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYNGHUS</title>
+<title>SYNGHUS // NÄLJATOOJA</title>
+<meta name="description" content="Synghus — doom, experimental, ritual metal Eestist. Album Näljatooja: seitse lugu, sõnad ja autorid.">
+<meta property="og:title" content="SYNGHUS — Näljatooja">
+<meta property="og:description" content="Doom * Experimental * Ritual Metal. Seitse lugu, sõnad ja autorid.">
+<meta property="og:image" content="https://synghus.band/cover.jpg">
+<meta property="og:url" content="https://synghus.band/">
+<meta property="og:type" content="music.album">
+<link rel="icon" href="synghus_logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Archivo+Black&display=swap" rel="stylesheet">
 <style>
-  html,body{margin:0;padding:0;height:100%;background:#0e0e0c;overflow:hidden}
-  #room{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+:root{
+  --bg:#0d0d0d; --fg:#e8e4dc; --rust:#8b3a1e; --acid:#c8c22e; --dim:#2c2b28; --mute:#8f8a7e;
+  --rule:3px solid var(--fg);
+  --mono:'Space Mono',ui-monospace,'Courier New',monospace;
+  --black:'Archivo Black',Impact,'Arial Black',sans-serif;
+}
+html[data-mode="light"]{--bg:#e8e4dc; --fg:#0d0d0d; --acid:#6d6910; --dim:#c4bfb0; --mute:#5c5850}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--fg); font-family:var(--mono); overflow-x:hidden; line-height:1.5}
+::selection{background:var(--rust); color:#e8e4dc}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--acid); outline-offset:-3px}
+img{max-width:100%; display:block}
+
+/* ---------- ticker ---------- */
+.ticker{border-bottom:var(--rule); padding:.5rem 0; overflow:hidden; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase}
+.ticker .track{display:flex; width:max-content; animation:tick 60s linear infinite}
+.ticker span{flex:none; white-space:nowrap}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- title grid ---------- */
+.grid{display:grid; grid-template-columns:2fr 1fr; border-bottom:var(--rule)}
+.cell{padding:1.5rem}
+.title-block{border-right:var(--rule); padding:3rem 2rem 2.4rem}
+h1{font-family:var(--black); font-size:clamp(3.2rem,13vw,10rem); line-height:.88; letter-spacing:-.02em; text-transform:uppercase}
+.tagline{margin-top:1.4rem; font-size:.8rem; letter-spacing:.3em; text-transform:uppercase; color:var(--acid)}
+.meta{font-size:.75rem; line-height:2; text-transform:uppercase; display:flex; flex-direction:column; justify-content:flex-end; gap:1rem}
+.meta b{color:var(--rust)}
+.invert{align-self:flex-start; background:none; border:3px solid var(--fg); color:var(--fg); font:inherit; font-size:.7rem; letter-spacing:.25em; text-transform:uppercase; padding:.5rem .9rem; cursor:pointer}
+.invert:hover{background:var(--fg); color:var(--bg)}
+
+/* ---------- cover row ---------- */
+.coverrow{display:grid; grid-template-columns:1fr 1fr; border-bottom:var(--rule)}
+.coverrow .img{border-right:var(--rule)}
+.coverrow img{width:100%; filter:grayscale(.4) contrast(1.2); transition:filter .2s}
+.coverrow img:hover{filter:none}
+.blurb{padding:2rem; display:flex; flex-direction:column; justify-content:space-between; gap:2rem}
+.lbl{color:var(--rust); font-weight:700; letter-spacing:.2em; font-size:.75rem; text-transform:uppercase}
+.lineup{list-style:none; display:grid; gap:.35rem; font-size:.85rem}
+.lineup li{display:grid; grid-template-columns:minmax(9rem,auto) 1fr; gap:1rem}
+.lineup li span:last-child{color:var(--mute)}
+.frag{font-size:.9rem; line-height:1.9}
+
+/* ---------- tracklist ---------- */
+.tracklist{border-bottom:var(--rule)}
+.trk{display:flex; align-items:baseline; gap:1.5rem; padding:1.3rem 2rem; border-bottom:1px solid var(--dim); text-decoration:none; font-family:var(--black); font-size:clamp(1.1rem,3.4vw,2rem); text-transform:uppercase; transition:background .15s,color .15s,padding-left .15s}
+.trk:last-child{border-bottom:none}
+.trk:hover{background:var(--fg); color:var(--bg); padding-left:3rem}
+.trk .n{font-family:var(--mono); font-size:.75rem; color:var(--rust); font-variant-numeric:tabular-nums}
+.trk .first{margin-left:auto; font-family:var(--mono); font-size:.75rem; text-transform:none; letter-spacing:0; color:var(--mute); text-align:right; max-width:40%}
+.trk:hover .first{color:var(--bg)}
+
+/* ---------- link rows ---------- */
+.linksrow{display:grid; grid-template-columns:auto; grid-auto-flow:column; grid-auto-columns:1fr; border-bottom:var(--rule)}
+.linksrow .rowlbl{padding:1.5rem 2rem; border-right:var(--rule); color:var(--rust); font-weight:700; letter-spacing:.2em; text-transform:uppercase; font-size:.75rem; display:flex; align-items:center}
+.linksrow a{padding:1.5rem .5rem; text-align:center; text-decoration:none; border-right:var(--rule); text-transform:uppercase; font-size:.8rem; letter-spacing:.25em; transition:.15s}
+.linksrow a:last-child{border-right:none}
+.linksrow a:hover{background:var(--acid); color:#0d0d0d}
+.linksrow small{display:block; margin-top:.3rem; letter-spacing:.1em; font-size:.65rem; color:var(--mute); text-transform:none}
+.linksrow a:hover small{color:#0d0d0d}
+
+/* ---------- jump bar ---------- */
+.jump{position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:var(--rule); display:flex; align-items:stretch; font-size:.75rem; letter-spacing:.2em; text-transform:uppercase}
+.jump .word{padding:.8rem 2rem; border-right:var(--rule); color:var(--rust); font-weight:700}
+.jump a{padding:.8rem 1rem; text-decoration:none; border-right:1px solid var(--dim); font-variant-numeric:tabular-nums}
+.jump a:hover{background:var(--fg); color:var(--bg)}
+.jump a.up{margin-left:auto; border-right:none; border-left:var(--rule)}
+
+/* ---------- songs ---------- */
+.song{border-bottom:var(--rule); scroll-margin-top:3rem}
+.sh{display:flex; align-items:baseline; gap:1.5rem; padding:2.2rem 2rem 1.6rem; border-bottom:1px solid var(--dim); font-family:var(--black); font-size:clamp(1.6rem,5vw,3.4rem); text-transform:uppercase; line-height:1; text-wrap:balance}
+.sh .n{font-family:var(--mono); font-size:.8rem; color:var(--rust); font-variant-numeric:tabular-nums}
+.body{display:grid; grid-template-columns:2fr 1fr}
+.lyrics{padding:2.4rem 2rem 3rem; border-right:var(--rule); font-size:1rem; line-height:1.75; max-width:60ch}
+.lyrics p{margin-bottom:1.75em}
+.lyrics p:last-child{margin-bottom:0}
+.cred{padding:2.4rem 1.5rem 2rem; font-size:.78rem}
+.cred > div{position:sticky; top:4rem; display:grid; gap:1.6rem}
+.cred dl{display:grid; grid-template-columns:auto 1fr; gap:.3rem 1rem}
+.cred dt{color:var(--rust); text-transform:uppercase; letter-spacing:.15em; font-weight:700}
+.cred .who dt{color:var(--fg); letter-spacing:0; text-transform:none; font-weight:400}
+.cred .who dd{color:var(--mute)}
+.cred a,.lineup a{text-decoration:none; border-bottom:1px solid var(--mute); transition:.15s}
+.cred a:hover,.lineup a:hover{color:var(--acid); border-bottom-color:var(--acid)}
+
+footer{padding:2rem; font-size:.75rem; text-transform:uppercase; letter-spacing:.2em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem}
+footer a{color:var(--acid); text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ---------- mobile ---------- */
+@media(max-width:760px){
+  .grid,.coverrow,.body{grid-template-columns:1fr}
+  .title-block{border-right:none; border-bottom:var(--rule); padding:2rem 1.2rem 1.6rem}
+  .cell,.blurb,.lyrics,.cred{padding-left:1.2rem; padding-right:1.2rem}
+  .coverrow .img{border-right:none; border-bottom:var(--rule)}
+  .trk,.sh{padding-left:1.2rem; padding-right:1.2rem}
+  .trk .first{display:none}
+  .linksrow{grid-template-columns:1fr 1fr; grid-auto-flow:row; grid-auto-columns:auto}
+  .linksrow .rowlbl{grid-column:1/-1; border-right:none; border-bottom:var(--rule); padding:.9rem 1.2rem}
+  .linksrow a{border-bottom:var(--rule)}
+  .linksrow a:nth-child(even){border-right:var(--rule)}
+  .linksrow a:nth-child(odd){border-right:none}
+  .linksrow a:last-child{border-bottom:none}
+  .linksrow a:last-child:nth-child(even){grid-column:1/-1; border-right:none}
+  .linksrow a:nth-last-child(2):nth-child(even){border-bottom:none}
+  .jump{overflow-x:auto}
+  .jump .word{padding:.8rem 1.2rem}
+  .jump a{padding:.8rem .8rem}
+  .jump a.up{display:none}
+  .lyrics{border-right:none; border-bottom:1px solid var(--dim)}
+  .cred > div{position:static}
+  footer{padding:1.5rem 1.2rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .ticker span{animation:none}
+  html{scroll-behavior:auto}
+  .trk,.linksrow a,.coverrow img{transition:none}
+}
 </style>
 </head>
 <body>
-<iframe id="room" title="SYNGHUS"></iframe>
+
+<div class="ticker" aria-hidden="true"><div class="track"><span>NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// </span><span>NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// </span></div></div>
+
+<header class="grid" id="top">
+  <div class="cell title-block">
+    <h1>SYNGHUS</h1>
+    <p class="tagline">Doom * Experimental * Ritual Metal</p>
+  </div>
+  <div class="cell meta">
+    <p><b>ALBUM:</b> NÄLJATOOJA<br><b>LUGUSID:</b> 07<br><b>AASTA:</b> MMXXVI<br><b>PÄRITOLU:</b> EESTI</p>
+    <button class="invert" id="invert" type="button" aria-pressed="false">▣ Invert</button>
+  </div>
+</header>
+
+<div class="coverrow">
+  <div class="img"><img src="cover.jpg" alt="Näljatooja kaanepilt — kapuutsiga vanamees sööb kalade keskel"></div>
+  <div class="blurb">
+    <div>
+      <p class="lbl">// Koosseis</p>
+      <ul class="lineup" style="margin-top:1rem">
+        <li><span><a href="https://silverjaanus.com">Silver Jaanus</a></span><span>vokaalid</span></li>
+        <li><span><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></span><span>kitarr, bass, süntesaatorid, vokaalid</span></li>
+      </ul>
+    </div>
+    <div>
+      <p class="lbl">// Tiitrid</p>
+      <ul class="lineup" style="margin-top:1rem">
+        <li><span>Produktsioon</span><span>Sten-Erik Toos, Silver Jaanus</span></li>
+        <li><span>Mix</span><span>Dan Warren</span></li>
+        <li><span>Helitehnika</span><span>Arnold Zagurski, Dan Warren</span></li>
+        <li><span>Mäster</span><span>Remi Teras</span></li>
+        <li><span>Lindistatud</span><span>Mari Talu, Vaiste küla. Sõle 77, Tallinn. Pöialpoisi 1, Tallinn. Skittlebrau Studio, Tallinn, (Sleepy)</span></li>
+      </ul>
+    </div>
+    <p class="frag">&gt; Kõhud kuivand kokku<br>&gt; Huuled lõhki läind<br>&gt; Otsaette vajund<br>&gt; Näljatooja jälg</p>
+  </div>
+</div>
+
+<nav class="tracklist" aria-label="Lood">
+  <a class="trk" href="#kunstnik"><span class="n">01</span>Kunstnik, kes ei loonud<span class="first">Ma ei taha olla</span></a>
+  <a class="trk" href="#naljatooja"><span class="n">02</span>Näljatooja<span class="first">Kiitsakad kogud vaevlisel teel</span></a>
+  <a class="trk" href="#ekstaas"><span class="n">03</span>Ekstaas<span class="first">Mu sees tume tühimik</span></a>
+  <a class="trk" href="#pouaaike"><span class="n">04</span>Põuaäike<span class="first">Jalad keerutavad tolmu</span></a>
+  <a class="trk" href="#oine-kone"><span class="n">05</span>Öine kõne<span class="first">Karged tähed läbistavad taevaketta</span></a>
+  <a class="trk" href="#metalne-maastik"><span class="n">06</span>Metalne maastik<span class="first">Kõnnumaale üksinda me</span></a>
+  <a class="trk" href="#rituaal"><span class="n">07</span>Rituaal<span class="first">Kutsun tuule siia</span></a>
+</nav>
+
+<div class="linksrow" id="kuula">
+  <span class="rowlbl">Kuula</span>
+  <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
+  <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple Music</a>
+  <a href="https://tidal.com/artist/60078518/u">Tidal</a>
+  <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube Music</a>
+  <a href="https://www.pandora.com/TR:159571507">Pandora</a>
+</div>
+
+<nav class="jump" aria-label="Hüppa loo juurde">
+  <span class="word">Sõnad</span>
+  <a href="#kunstnik">01</a><a href="#naljatooja">02</a><a href="#ekstaas">03</a><a href="#pouaaike">04</a><a href="#oine-kone">05</a><a href="#metalne-maastik">06</a><a href="#rituaal">07</a>
+  <a class="up" href="#top">↑</a>
+</nav>
+
+<!-- 01 -->
+<section class="song" id="kunstnik">
+  <h2 class="sh"><span class="n">01</span>Kunstnik, kes ei loonud</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Ma ei taha olla<br>Töö on rabe<br>Viisid on närbund<br>Mõtted vajund metsa</p>
+      <p>Värvid on ära tuhmund<br>Vormid lollakad<br>Muusa on ära läinud<br>Mina kannatan</p>
+      <p>Ümberringi värdjad, maailm on tühi<br>Hääled mu ümber aina nõuavad<br>Sa oled kunstnik, tule ja vaid anna<br>Tee ja loo ja kannata</p>
+      <p>Vaikuses seisad, sõnad kinni kurgus<br>Ainult sina tead, et ei suuda sa<br>Vastu seina viska oma instrumendid<br>Maha kõik põleta</p>
+      <p>Lummus võtab üle<br>Hullus valdab maad<br>Mõtted vaid keerlevad<br>Korratus voos</p>
+      <p>Mõistus annab alla<br>Valgus mustas toas<br>Varjumaailma kütkeis<br>Veri vemmeldab</p>
+      <p>Kui hullus on vabadus<br>Siis mulle see ahel</p>
+      <p>Ränkraskelt peale vajutab<br>Kesköises vihmas</p>
+      <p>Ma oma taaka lohistan<br>Pimeda ja kurdina<br>Oma teel komistan<br>See raskus on mu kaaslane<br>Kui tormituuled möllavad</p>
+      <p>Kui vaigistan meeled ja sulgen suu<br>Ja lõikan end kõigest ära<br>Mu kalmule võid kirjutada<br>Kunstnik kes ei loonud</p>
+      <p>Kui teised rabasid<br>Sa jälle magasid<br>Ja unenäos lõid alasit, tolmuga<br>See elu oleneb su pintslitõmmetest<br>Kuid puhka enne veidike</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Silver Jaanus, Sten-Erik Toos</dd><dt>Muusika</dt><dd>Sten-Erik Toos</dd></dl>
+      <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, bass, süntesaatorid, vokaalid</dd><dt>Dan Warren</dt><dd>trummide programmeerimine</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="song" id="naljatooja">
+  <h2 class="sh"><span class="n">02</span>Näljatooja</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Kiitsakad kogud<br>Vaevlisel teel<br>Meeleheitemülkas<br>Süükoorma all</p>
+      <p>Kalbe kuuvalgus<br>Kahjatseb kehi<br>Kes on kõndimas<br>Kannatusradu</p>
+      <p>See hing mis<br>Veel on sees<br>Katki ja määndunud<br>Siin õudsas paigas</p>
+      <p>Surmakultuslaanes</p>
+      <p>Jõuetud kered<br>Kisada ei suuda<br>Laastatud meeled<br>Tuhmunud valu</p>
+      <p>Suurele kivile<br>Kinnitatud kehad<br>Valu ei tunne<br>Naabreid ei nea</p>
+      <p>Kõhud kuivand kokku<br>Huuled lõhki läind<br>Otsaette vajund<br>Näljatooja jälg</p>
+      <p>Ema oma lapse<br>Vaikselt lämmatab<br>Ihu saab ihuks<br>Söödud soolata</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Silver Jaanus</dd><dt>Muusika</dt><dd>Sten-Erik Toos, Arnold Zagurski</dd></dl>
+      <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, bass, elektriorel, süntesaatorid</dd><dt><a href="https://www.instagram.com/arnoldzagurski/">Arnold Zagurski</a></dt><dd>trummide programmeerimine</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="song" id="ekstaas">
+  <h2 class="sh"><span class="n">03</span>Ekstaas</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Mu sees tume tühimik<br>Mis sosistab, karjub ja oigab<br>Udune aimdus tõmbleb<br>Tuhande tunde toel</p>
+      <p>Paberilt loetud sõnad<br>Haukan jumala ihu<br>Veri voolab kurgust<br>Kõnelen võõraid keeli</p>
+      <p>Reisin ürgmetsa sügavusse<br>Konksud läbistavad ihu<br>Selle hüti lae all<br>Kaaluta olekus hõljun</p>
+      <p>Pime öö mind tervitab<br>Tundmatus paigas tallan<br>Kirglikku lõõma ihaledes<br>Piiridest teed ostsin välja</p>
+      <p>Mu keha ja mõistus on ühinend<br>Meeled määnduvad maha<br>Mõtete muretus kiiluvees<br>Teadvus on lahustund ära</p>
+      <p>Kae mu silmilt langeb maha<br>Ekstaasikütkeis rabelen</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Silver Jaanus</dd><dt>Muusika</dt><dd>Silver Jaanus, Sten-Erik Toos</dd></dl>
+      <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaal</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>süntesaatorid</dd><dt>Tobias Tammearu</dt><dd>tenorsaksofon</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="song" id="pouaaike">
+  <h2 class="sh"><span class="n">04</span>Põuaäike</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Jalad keerutavad tolmu<br>Vaiksel kruusateel<br>Väsind liikmed komistavad kividel<br>Kuid peatuda on vara veel</p>
+      <p>Kuldkollase päikese eest<br>Pole kuskile varjuda<br>Ma olen higine ja räpane<br>Ja tahaksin karjuda</p>
+      <p>Sulatuul paneb tuikama<br>Mu katki näritud huuled<br>Ja mu paistes, korpas keel<br>On kurgulakke kuivanud</p>
+      <p>Miski vilgub ja kõmiseb seal<br>Torm peksab liiva mu ümber<br>Õhk väreleb ja tantsib ja keeb<br>Ja kärgatus lukustab kõrvad</p>
+      <p>Põleng liigub kärmelt edasi<br>Ja tormituul haarab lõõsa<br>Põuavälk pillub kuumi sädemeid<br>Mis süütavad maa ja taeva</p>
+      <p>Lootsin tuletormist seekord pääseda<br>Mu armid pole paranend ära<br>Ju siis pean jälle läbi elama<br>Tulesurma ja ülestõusmise</p>
+      <p>Kui see ränkrasket piina ei teeks<br>Naudiksin tormis lendu ma<br>Maru rebib mu põlevat keha<br>Ja maa kohal ringi pillutab</p>
+      <p>Ma ärkan kui kuldsed pilved<br>On kogunend taeva alla<br>Ja vedela väävli piisad<br>Hellitavad põlend nahka</p>
+      <p>Kõrbend maa ärkab mu ümber<br>Ja kuldset vedelikku neelab alla<br>Elusolendid tungivad välja<br>Ja sirutavad oma tundlad üles</p>
+      <p>Mu põlend keha on liiga nõrk –<br>Et teed jätkata<br>Pean veidi veel lamama –<br>Ja keha taastama</p>
+      <p>Väävlilinnud lendavad<br>Läbi pilvede<br>Väiksed loomad urgudes<br>Heitnud tulekuued</p>
+      <p>Mu põlend silmad on hakanud nägema<br>Taamal mingit värelust<br>Ma loodan see mu sihtpunkt<br>Kuhu eesmärk kohale jõuda</p>
+      <p>Mäed helgivad ja kutsuvad mind<br>Ja tõotavad puhkust anda<br>Et mu palverännak siin kõnnumaal<br>Võiks peagi lõppeda</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Silver Jaanus</dd><dt>Muusika</dt><dd>Sten-Erik Toos, Arnold Zagurski</dd></dl>
+      <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, süntesaatorid, vokaalid</dd><dt><a href="https://www.instagram.com/arnoldzagurski/">Arnold Zagurski</a></dt><dd>bass, trummide programmeerimine</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="song" id="oine-kone">
+  <h2 class="sh"><span class="n">05</span>Öine kõne</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Karged tähed läbistavad taevaketta<br>Külm valgus sajab maale<br>Jäätund järve külmas lõõmas<br>Sinise leegina põled</p>
+      <p>Su hingus ei tekita auru<br>Lumi ei krudise su teel<br>Su leeki kaugelt näha pole<br>Ja lähedalt on surmav see</p>
+      <p>Jääkristallid ehivad su pead<br>Su küüntest rabalauka kaas<br>Kadakad su kehast kasvand läbi<br>Iseendale sa ohvri tood</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Silver Jaanus</dd><dt>Muusika</dt><dd>Silver Jaanus, Sten-Erik Toos</dd></dl>
+      <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid, süntesaatorid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>süntesaatorid</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="song" id="metalne-maastik">
+  <h2 class="sh"><span class="n">06</span>Metalne maastik</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Kõnnumaale üksinda me<br>Kõndima nüüd läheme<br>Külm metalne maastik<br>Meie jalad rebib verele</p>
+      <p>Homset paremat me<br>Jääme janusena ootama<br>Kes meid tõstab kui<br>Me oma põlvedele langeme</p>
+      <p>Neame endit magusrasket<br>Koormat turjal vedima<br>Silmil oma koopaist tühjaks<br>Laseme me voolata</p>
+      <p>Pead me pimedana<br>Asetame otse pakule<br>Raskus hoobilt langeb<br>Meie kõveratelt kaeladelt</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Sten-Erik Toos</dd><dt>Muusika</dt><dd>Sten-Erik Toos, Silver Jaanus</dd></dl>
+      <dl class="who"><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>vokaalid, süntesaatorid</dd><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>sämplid</dd><dt>Dan Warren</dt><dd>trummid</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="song" id="rituaal">
+  <h2 class="sh"><span class="n">07</span>Rituaal</h2>
+  <div class="body">
+    <div class="lyrics">
+      <p>Kutsun tuule siia<br>Manan hääle ära</p>
+      <p>Taevast tulnud hinguse<br>Vaikust saadavad tähed</p>
+      <p>Võtan maailmal käest<br>Murran oma tahte alla</p>
+      <p>Öövalgus pimestab<br>Sõrmedel heliseb aeg</p>
+      <p>Tuli taeva põletab<br>Kaosest sa sünnid</p>
+      <p>Sosistatud sõna<br>Horisonti kõverdab</p>
+      <p>Pilli keeled võnguvad<br>Kehatu saab lihaks</p>
+      <p>Kraabin mulla ära<br>Tõmban koore maha<br>Nülin naha ära<br>Kisun paljaks end</p>
+    </div>
+    <aside class="cred"><div>
+      <dl><dt>Sõnad</dt><dd>Silver Jaanus</dd><dt>Muusika</dt><dd>Sten-Erik Toos</dd></dl>
+      <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, bass</dd><dt><a href="https://www.instagram.com/arnoldzagurski/">Arnold Zagurski</a></dt><dd>trummide programmeerimine</dd></dl>
+    </div></aside>
+  </div>
+</section>
+
+<div class="linksrow" id="kontakt">
+  <span class="rowlbl">Võta ühendust</span>
+  <a href="mailto:synghus.band@gmail.com">Kiri<small>synghus.band@gmail.com</small></a>
+  <a href="https://silverjaanus.com">Silver<small>silverjaanus.com</small></a>
+  <a href="https://www.instagram.com/stenvanatoos">Sten<small>instagram / stenvanatoos</small></a>
+</div>
+
+<footer>
+  <span>SYNGHUS © MMXXVI</span>
+  <a href="arhiiv.html">Arhiiv — vanad toad</a>
+  <a href="#top">↑ Algusesse</a>
+</footer>
+
 <script>
-(function () {
-  var rooms = ["v1.html", "v2.html", "v3.html", "v4.html", "v5.html", "v6.html"];
-  var pick = rooms[Math.floor(Math.random() * rooms.length)];
-  // Cache-bust so the browser never re-serves the same room from a stale refresh.
-  document.getElementById("room").src = pick + "?r=" + Date.now();
+(function(){
+  var root=document.documentElement, btn=document.getElementById('invert');
+  var mode=null;
+  try{mode=localStorage.getItem('synghus-mode')}catch(e){}
+  if(mode==='light'){root.setAttribute('data-mode','light'); btn.setAttribute('aria-pressed','true')}
+  btn.addEventListener('click',function(){
+    var light=root.getAttribute('data-mode')==='light';
+    if(light){root.removeAttribute('data-mode')}else{root.setAttribute('data-mode','light')}
+    btn.setAttribute('aria-pressed',String(!light));
+    try{localStorage.setItem('synghus-mode',light?'dark':'light')}catch(e){}
+  });
 })();
 </script>
-<noscript>
-  <iframe src="v4.html" style="position:fixed;inset:0;width:100%;height:100%;border:0"></iframe>
-</noscript>
 </body>
 </html>
