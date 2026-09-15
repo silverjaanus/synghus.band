@@ -30,12 +30,6 @@ a{color:inherit}
 a:focus-visible,button:focus-visible{outline:3px solid var(--acid); outline-offset:-3px}
 img{max-width:100%; display:block}
 
-/* ---------- ticker ---------- */
-.ticker{border-bottom:var(--rule); padding:.5rem 0; overflow:hidden; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase}
-.ticker .track{display:flex; width:max-content; animation:tick 60s linear infinite}
-.ticker span{flex:none; white-space:nowrap}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
 /* ---------- title grid ---------- */
 .grid{display:grid; grid-template-columns:2fr 1fr; border-bottom:var(--rule)}
 .cell{padding:1.5rem}
@@ -57,16 +51,19 @@ h1{font-family:var(--black); font-size:clamp(3.2rem,13vw,10rem); line-height:.88
 .lineup{list-style:none; display:grid; gap:.35rem; font-size:.85rem}
 .lineup li{display:grid; grid-template-columns:minmax(9rem,auto) 1fr; gap:1rem}
 .lineup li span:last-child{color:var(--mute)}
-.frag{font-size:.9rem; line-height:1.9}
 
 /* ---------- tracklist ---------- */
 .tracklist{border-bottom:var(--rule)}
-.trk{display:flex; align-items:baseline; gap:1.5rem; padding:1.3rem 2rem; border-bottom:1px solid var(--dim); text-decoration:none; font-family:var(--black); font-size:clamp(1.1rem,3.4vw,2rem); text-transform:uppercase; transition:background .15s,color .15s,padding-left .15s}
-.trk:last-child{border-bottom:none}
+.trk{display:flex; align-items:center; cursor:pointer; list-style:none; gap:1.5rem; padding:1.3rem 2rem; border-bottom:1px solid var(--dim); text-decoration:none; font-family:var(--black); font-size:clamp(1.1rem,3.4vw,2rem); text-transform:uppercase; transition:background .15s,color .15s,padding-left .15s}
+.trk::-webkit-details-marker{display:none}
+.trk h2{font:inherit; line-height:1.1}
+.trk .plus{margin-left:auto; font-family:var(--mono); font-size:1.4rem; line-height:1; transition:transform .2s}
+.song[open] .plus{transform:rotate(45deg)}
+.song[open] > .trk{background:var(--fg); color:var(--bg)}
+.song:last-child{border-bottom:none}
+.song:last-child:not([open]) > .trk{border-bottom:none}
 .trk:hover{background:var(--fg); color:var(--bg); padding-left:3rem}
 .trk .n{font-family:var(--mono); font-size:.75rem; color:var(--rust); font-variant-numeric:tabular-nums}
-.trk .first{margin-left:auto; font-family:var(--mono); font-size:.75rem; text-transform:none; letter-spacing:0; color:var(--mute); text-align:right; max-width:40%}
-.trk:hover .first{color:var(--bg)}
 
 /* ---------- link rows ---------- */
 .linksrow{display:grid; grid-template-columns:auto; grid-auto-flow:column; grid-auto-columns:1fr; border-bottom:var(--rule)}
@@ -77,23 +74,16 @@ h1{font-family:var(--black); font-size:clamp(3.2rem,13vw,10rem); line-height:.88
 .linksrow small{display:block; margin-top:.3rem; letter-spacing:.1em; font-size:.65rem; color:var(--mute); text-transform:none}
 .linksrow a:hover small{color:#0d0d0d}
 
-/* ---------- jump bar ---------- */
-.jump{position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:var(--rule); display:flex; align-items:stretch; font-size:.75rem; letter-spacing:.2em; text-transform:uppercase}
-.jump .word{padding:.8rem 2rem; border-right:var(--rule); color:var(--rust); font-weight:700}
-.jump a{padding:.8rem 1rem; text-decoration:none; border-right:1px solid var(--dim); font-variant-numeric:tabular-nums}
-.jump a:hover{background:var(--fg); color:var(--bg)}
-.jump a.up{margin-left:auto; border-right:none; border-left:var(--rule)}
-
 /* ---------- songs ---------- */
-.song{border-bottom:var(--rule); scroll-margin-top:3rem}
-.sh{display:flex; align-items:baseline; gap:1.5rem; padding:2.2rem 2rem 1.6rem; border-bottom:1px solid var(--dim); font-family:var(--black); font-size:clamp(1.6rem,5vw,3.4rem); text-transform:uppercase; line-height:1; text-wrap:balance}
-.sh .n{font-family:var(--mono); font-size:.8rem; color:var(--rust); font-variant-numeric:tabular-nums}
+.song{scroll-margin-top:0}
+.song[open] .body{border-bottom:var(--rule)}
+.song[open]:last-child .body{border-bottom:none}
 .body{display:grid; grid-template-columns:2fr 1fr}
 .lyrics{padding:2.4rem 2rem 3rem; border-right:var(--rule); font-size:1rem; line-height:1.75; max-width:60ch}
 .lyrics p{margin-bottom:1.75em}
 .lyrics p:last-child{margin-bottom:0}
 .cred{padding:2.4rem 1.5rem 2rem; font-size:.78rem}
-.cred > div{position:sticky; top:4rem; display:grid; gap:1.6rem}
+.cred > div{position:sticky; top:1.5rem; display:grid; gap:1.6rem}
 .cred dl{display:grid; grid-template-columns:auto 1fr; gap:.3rem 1rem}
 .cred dt{color:var(--rust); text-transform:uppercase; letter-spacing:.15em; font-weight:700}
 .cred .who dt{color:var(--fg); letter-spacing:0; text-transform:none; font-weight:400}
@@ -111,8 +101,7 @@ footer a:hover{text-decoration:underline}
   .title-block{border-right:none; border-bottom:var(--rule); padding:2rem 1.2rem 1.6rem}
   .cell,.blurb,.lyrics,.cred{padding-left:1.2rem; padding-right:1.2rem}
   .coverrow .img{border-right:none; border-bottom:var(--rule)}
-  .trk,.sh{padding-left:1.2rem; padding-right:1.2rem}
-  .trk .first{display:none}
+  .trk{padding-left:1.2rem; padding-right:1.2rem}
   .linksrow{grid-template-columns:1fr 1fr; grid-auto-flow:row; grid-auto-columns:auto}
   .linksrow .rowlbl{grid-column:1/-1; border-right:none; border-bottom:var(--rule); padding:.9rem 1.2rem}
   .linksrow a{border-bottom:var(--rule)}
@@ -121,24 +110,17 @@ footer a:hover{text-decoration:underline}
   .linksrow a:last-child{border-bottom:none}
   .linksrow a:last-child:nth-child(even){grid-column:1/-1; border-right:none}
   .linksrow a:nth-last-child(2):nth-child(even){border-bottom:none}
-  .jump{overflow-x:auto}
-  .jump .word{padding:.8rem 1.2rem}
-  .jump a{padding:.8rem .8rem}
-  .jump a.up{display:none}
   .lyrics{border-right:none; border-bottom:1px solid var(--dim)}
   .cred > div{position:static}
   footer{padding:1.5rem 1.2rem}
 }
 @media(prefers-reduced-motion:reduce){
-  .ticker span{animation:none}
   html{scroll-behavior:auto}
-  .trk,.linksrow a,.coverrow img{transition:none}
+  .trk,.trk .plus,.linksrow a,.coverrow img{transition:none}
 }
 </style>
 </head>
 <body>
-
-<div class="ticker" aria-hidden="true"><div class="track"><span>NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// </span><span>NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// NÄLJATOOJA /// SEITSE LUGU /// MMXXVI /// DOOM * EXPERIMENTAL * RITUAL METAL /// SYNGHUS /// </span></div></div>
 
 <header class="grid" id="top">
   <div class="cell title-block">
@@ -171,38 +153,12 @@ footer a:hover{text-decoration:underline}
         <li><span>Lindistatud</span><span>Mari Talu, Vaiste küla. Sõle 77, Tallinn. Pöialpoisi 1, Tallinn. Skittlebrau Studio, Tallinn, (Sleepy)</span></li>
       </ul>
     </div>
-    <p class="frag">&gt; Kõhud kuivand kokku<br>&gt; Huuled lõhki läind<br>&gt; Otsaette vajund<br>&gt; Näljatooja jälg</p>
   </div>
 </div>
 
-<nav class="tracklist" aria-label="Lood">
-  <a class="trk" href="#kunstnik"><span class="n">01</span>Kunstnik, kes ei loonud<span class="first">Ma ei taha olla</span></a>
-  <a class="trk" href="#naljatooja"><span class="n">02</span>Näljatooja<span class="first">Kiitsakad kogud vaevlisel teel</span></a>
-  <a class="trk" href="#ekstaas"><span class="n">03</span>Ekstaas<span class="first">Mu sees tume tühimik</span></a>
-  <a class="trk" href="#pouaaike"><span class="n">04</span>Põuaäike<span class="first">Jalad keerutavad tolmu</span></a>
-  <a class="trk" href="#oine-kone"><span class="n">05</span>Öine kõne<span class="first">Karged tähed läbistavad taevaketta</span></a>
-  <a class="trk" href="#metalne-maastik"><span class="n">06</span>Metalne maastik<span class="first">Kõnnumaale üksinda me</span></a>
-  <a class="trk" href="#rituaal"><span class="n">07</span>Rituaal<span class="first">Kutsun tuule siia</span></a>
-</nav>
-
-<div class="linksrow" id="kuula">
-  <span class="rowlbl">Kuula</span>
-  <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
-  <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple Music</a>
-  <a href="https://tidal.com/artist/60078518/u">Tidal</a>
-  <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube Music</a>
-  <a href="https://www.pandora.com/TR:159571507">Pandora</a>
-</div>
-
-<nav class="jump" aria-label="Hüppa loo juurde">
-  <span class="word">Sõnad</span>
-  <a href="#kunstnik">01</a><a href="#naljatooja">02</a><a href="#ekstaas">03</a><a href="#pouaaike">04</a><a href="#oine-kone">05</a><a href="#metalne-maastik">06</a><a href="#rituaal">07</a>
-  <a class="up" href="#top">↑</a>
-</nav>
-
-<!-- 01 -->
-<section class="song" id="kunstnik">
-  <h2 class="sh"><span class="n">01</span>Kunstnik, kes ei loonud</h2>
+<section class="tracklist" aria-label="Lood">
+<details class="song" id="kunstnik">
+  <summary class="trk"><span class="n">01</span><h2>Kunstnik, kes ei loonud</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Ma ei taha olla<br>Töö on rabe<br>Viisid on närbund<br>Mõtted vajund metsa</p>
@@ -222,11 +178,9 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, bass, süntesaatorid, vokaalid</dd><dt>Dan Warren</dt><dd>trummide programmeerimine</dd></dl>
     </div></aside>
   </div>
-</section>
-
-<!-- 02 -->
-<section class="song" id="naljatooja">
-  <h2 class="sh"><span class="n">02</span>Näljatooja</h2>
+</details>
+<details class="song" id="naljatooja">
+  <summary class="trk"><span class="n">02</span><h2>Näljatooja</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Kiitsakad kogud<br>Vaevlisel teel<br>Meeleheitemülkas<br>Süükoorma all</p>
@@ -243,11 +197,9 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, bass, elektriorel, süntesaatorid</dd><dt><a href="https://www.instagram.com/arnoldzagurski/">Arnold Zagurski</a></dt><dd>trummide programmeerimine</dd></dl>
     </div></aside>
   </div>
-</section>
-
-<!-- 03 -->
-<section class="song" id="ekstaas">
-  <h2 class="sh"><span class="n">03</span>Ekstaas</h2>
+</details>
+<details class="song" id="ekstaas">
+  <summary class="trk"><span class="n">03</span><h2>Ekstaas</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Mu sees tume tühimik<br>Mis sosistab, karjub ja oigab<br>Udune aimdus tõmbleb<br>Tuhande tunde toel</p>
@@ -262,11 +214,9 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaal</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>süntesaatorid</dd><dt>Tobias Tammearu</dt><dd>tenorsaksofon</dd></dl>
     </div></aside>
   </div>
-</section>
-
-<!-- 04 -->
-<section class="song" id="pouaaike">
-  <h2 class="sh"><span class="n">04</span>Põuaäike</h2>
+</details>
+<details class="song" id="pouaaike">
+  <summary class="trk"><span class="n">04</span><h2>Põuaäike</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Jalad keerutavad tolmu<br>Vaiksel kruusateel<br>Väsind liikmed komistavad kividel<br>Kuid peatuda on vara veel</p>
@@ -288,11 +238,9 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, süntesaatorid, vokaalid</dd><dt><a href="https://www.instagram.com/arnoldzagurski/">Arnold Zagurski</a></dt><dd>bass, trummide programmeerimine</dd></dl>
     </div></aside>
   </div>
-</section>
-
-<!-- 05 -->
-<section class="song" id="oine-kone">
-  <h2 class="sh"><span class="n">05</span>Öine kõne</h2>
+</details>
+<details class="song" id="oine-kone">
+  <summary class="trk"><span class="n">05</span><h2>Öine kõne</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Karged tähed läbistavad taevaketta<br>Külm valgus sajab maale<br>Jäätund järve külmas lõõmas<br>Sinise leegina põled</p>
@@ -304,11 +252,9 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid, süntesaatorid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>süntesaatorid</dd></dl>
     </div></aside>
   </div>
-</section>
-
-<!-- 06 -->
-<section class="song" id="metalne-maastik">
-  <h2 class="sh"><span class="n">06</span>Metalne maastik</h2>
+</details>
+<details class="song" id="metalne-maastik">
+  <summary class="trk"><span class="n">06</span><h2>Metalne maastik</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Kõnnumaale üksinda me<br>Kõndima nüüd läheme<br>Külm metalne maastik<br>Meie jalad rebib verele</p>
@@ -321,11 +267,9 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>vokaalid, süntesaatorid</dd><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>sämplid</dd><dt>Dan Warren</dt><dd>trummid</dd></dl>
     </div></aside>
   </div>
-</section>
-
-<!-- 07 -->
-<section class="song" id="rituaal">
-  <h2 class="sh"><span class="n">07</span>Rituaal</h2>
+</details>
+<details class="song" id="rituaal">
+  <summary class="trk"><span class="n">07</span><h2>Rituaal</h2><span class="plus" aria-hidden="true">+</span></summary>
   <div class="body">
     <div class="lyrics">
       <p>Kutsun tuule siia<br>Manan hääle ära</p>
@@ -342,7 +286,18 @@ footer a:hover{text-decoration:underline}
       <dl class="who"><dt><a href="https://silverjaanus.com">Silver Jaanus</a></dt><dd>vokaalid</dd><dt><a href="https://www.instagram.com/stenvanatoos">Sten-Erik Toos</a></dt><dd>kitarr, bass</dd><dt><a href="https://www.instagram.com/arnoldzagurski/">Arnold Zagurski</a></dt><dd>trummide programmeerimine</dd></dl>
     </div></aside>
   </div>
+</details>
 </section>
+
+<div class="linksrow" id="kuula">
+  <span class="rowlbl">Kuula</span>
+  <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
+  <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple Music</a>
+  <a href="https://tidal.com/artist/60078518/u">Tidal</a>
+  <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube Music</a>
+  <a href="https://www.pandora.com/TR:159571507">Pandora</a>
+</div>
+
 
 <div class="linksrow" id="kontakt">
   <span class="rowlbl">Võta ühendust</span>
@@ -370,6 +325,14 @@ footer a:hover{text-decoration:underline}
     btn.setAttribute('aria-pressed',String(!light));
     try{localStorage.setItem('synghus-mode',light?'dark':'light')}catch(e){}
   });
+})();
+(function(){
+  function openFromHash(){
+    var id=location.hash.slice(1); if(!id) return;
+    var el=document.getElementById(id);
+    if(el && el.tagName==='DETAILS'){el.open=true; el.scrollIntoView();}
+  }
+  openFromHash(); window.addEventListener('hashchange',openFromHash);
 })();
 </script>
 </body>
