@@ -95,6 +95,13 @@ footer{padding:2rem; font-size:.75rem; text-transform:uppercase; letter-spacing:
 footer a{color:var(--acid); text-decoration:none}
 footer a:hover{text-decoration:underline}
 
+@media(min-width:761px){
+  #kuula{grid-auto-flow:row; grid-template-columns:auto repeat(4,1fr)}
+  #kuula .rowlbl{grid-row:span 2}
+  #kuula a:nth-child(-n+5){border-bottom:var(--rule)}
+  #kuula a:nth-child(5){border-right:none}
+}
+
 /* ---------- mobile ---------- */
 @media(max-width:760px){
   .grid,.coverrow,.body{grid-template-columns:1fr}
@@ -293,8 +300,11 @@ footer a:hover{text-decoration:underline}
   <span class="rowlbl">Kuula</span>
   <a href="https://open.spotify.com/artist/5pUvKSnzZFnf4oFvnXFB1Y">Spotify</a>
   <a href="https://music.apple.com/ee/album/n%C3%A4ljatooja/1814001291">Apple Music</a>
+  <a href="https://music.apple.com/ee/artist/synghus/1814000558?app=itunes">iTunes Store</a>
   <a href="https://tidal.com/artist/60078518/u">Tidal</a>
   <a href="https://music.youtube.com/channel/UC904nCDVOEpt5Rr3jQJBFng">YouTube Music</a>
+  <a href="https://music.amazon.com/artists/B0F8FSC9LV/synghus">Amazon Music</a>
+  <a href="https://www.deezer.com/artist/322898241">Deezer</a>
   <a href="https://www.pandora.com/TR:159571507">Pandora</a>
 </div>
 
